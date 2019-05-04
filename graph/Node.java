@@ -4,7 +4,7 @@ import java.util.ListIterator;
 
 public class Node implements Vertex{
 	
-	private int id;
+	private final int id;
 	private static int cnt = 1;
 	private LinkedList<Link> links = new LinkedList<Link>();
 	

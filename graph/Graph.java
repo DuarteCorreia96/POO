@@ -5,20 +5,18 @@ public interface Graph {
 	int DEFAULT_EDGE_WEIGHT = 1;
 	
 	int getSize();
-	boolean addEdge(Vertex v1, Vertex v2);
-	boolean addEdge(Vertex v1, Vertex v2, int weight);
-	Vertex addVertex();
-	boolean addVertex(Vertex v);
-	boolean containsEdge(Vertex v1, Vertex v2);
-	boolean containsVertex(Vertex v);
-	int degreeOf(Vertex v);
-	Edge[] getAllEdges(Vertex v);
-	int getEdgeWeight(Vertex v1, Vertex v2);
-	boolean removeEdge(Vertex v1, Vertex v2);
-	boolean removeVertex(Vertex v);
-	void setEdgeWeight(Vertex v1, Vertex v2, int weight);
-	Vertex[] vertexArray();
-	Vertex findVertex(Vertex v);
 	Vertex findVertex(int id);
-
+	boolean addEdge(int id1, int v2);
+	boolean addEdge(int id1, int v2, int weight);
+	void addVertex();
+	boolean containsEdge(int id1, int v2);
+	boolean containsVertex(int id);
+	int degreeOf(int id);
+	Edge[] getAllEdges(int id);
+	int getEdgeWeight(int id1, int id2);
+	boolean removeEdge(int id1, int id2);
+	boolean removeVertex(int id);
+	boolean setEdgeWeight(int id1, int id2, int weight);
+	Vertex[] getAllVertices();
+	
 }
