@@ -24,7 +24,8 @@ public class Graph<T,E> {
 		
 		Node<E> node_b = findNode(node2);
 		if(node_b != null)
-			node_b.addAdjacent(new Node<E>(node1),weight);
+      node_b.addAdjacent(new Node<E>(node1),weight);
+
 	}
 	
 	@SuppressWarnings("unchecked")
