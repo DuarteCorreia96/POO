@@ -4,13 +4,8 @@
       "type": "java",
       "name": "CodeLens (Launch) - Main",
       "request": "launch",
-      "mainClass": "tsp.Main"
-    },
-    {
-      "type": "java",
-      "name": "CodeLens (Launch) - App",
-      "request": "launch",
-      "mainClass": "tsp.Main"
+      "mainClass": "tsp.Main",
+      "projectName": "Java"
     },
     {
       "type": "java",

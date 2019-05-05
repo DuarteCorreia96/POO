@@ -1,6 +1,7 @@
 package tsp;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 public abstract class Event {
 
@@ -8,8 +9,15 @@ public abstract class Event {
   private static int eevents = 0;
   private static int mevents = 0;
 
+  private static Random random = new Random();
+
   public abstract void incEvent();
   public abstract LinkedList<Event> doEvent();
+
+  public static double expRandom(double m) {
+    double next = random.nextDouble();
+    return -m * Math.log(1.0 - next);
+  }
 
   public void setEventTime(double time) {
     eventTime = time;
@@ -27,11 +35,11 @@ public abstract class Event {
     mevents++;
   }
 
-  public int getEEvents() {
+  public static int getEEvents() {
     return eevents;
   }
 
-  public int getMEvents() {
+  public static int getMEvents() {
     return mevents;
   }
 

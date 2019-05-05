@@ -1,54 +1,22 @@
 package graph;
 
-public class Graph<T,E> {
+public interface Graph {
 	
-	T data;
-	int n;		
-	Node<?>[] graph_nodes;
-		
-	public Graph(T _data, int _n) {
-		
-		data = _data;
-		n = _n;
-		graph_nodes = new Node<?>[n];
-		
-		for(int j=0; j<n; j++)
-			graph_nodes[j] = new Node<E>();
-	}
+	int DEFAULT_EDGE_WEIGHT = 1;
 	
-	public void addConnection(int node1, int node2, int weight) {
-		
-		Node<E> node_a = findNode(node1);
-		if(node_a != null)
-			node_a.addAdjacent(new Node<E>(node2),weight);
-		
-		Node<E> node_b = findNode(node2);
-		if(node_b != null)
-      node_b.addAdjacent(new Node<E>(node1),weight);
-
-	}
-	
-	@SuppressWarnings("unchecked")
-	public Node<E> findNode(int id) {
-		
-		for(Node<?> j:graph_nodes) {
-			if(j.id == id)
-				return (Node<E>)j;
-		}
-		
-		return null;	
-	}
-
-	@Override
-	public String toString() {
-		
-		String str = "";
-		for(int j=0; j<n; j++) {
-			str += graph_nodes[j];
-		}
-		
-		return "\n-> Graph \n\n" + str;
-	}
-	
+	int getSize();
+	Vertex findVertex(int id);
+	boolean addEdge(int id1, int v2);
+	boolean addEdge(int id1, int v2, int weight);
+	void addVertex();
+	boolean containsEdge(int id1, int v2);
+	boolean containsVertex(int id);
+	int degreeOf(int id);
+	Edge[] getAllEdges(int id);
+	int getEdgeWeight(int id1, int id2);
+	boolean removeEdge(int id1, int id2);
+	boolean removeVertex(int id);
+	boolean setEdgeWeight(int id1, int id2, int weight);
+	Vertex[] getAllVertices();
 	
 }

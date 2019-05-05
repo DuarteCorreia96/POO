@@ -2,74 +2,119 @@ package graph;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-public class Node<T> {
+public class Node implements Vertex{
 	
-	private T data_node;
+	private final int id;
 	private static int cnt = 1;
-	int id;
+	private LinkedList<Link> links = new LinkedList<Link>();
 	
-	class Edge{
-		Node<T> node;
-		int weight;
-		
-		Edge(Node<T> n, int w){
-			node = n;
-			weight = w;
-		}
-		
-		void changeWeight(int w) {
-			weight = w;
-		}
-		
-	}
-	
-	LinkedList<Edge> adjacent = new LinkedList<Edge>();
-	
-	Node(){
-		id = cnt;
-		cnt++;
-	}
-	
-	Node(int _id){
-		id = _id;
+	public Node() {
+		id = cnt++;
 	}
 
-	Node(int _id, T data){
-		id = _id;
-		data_node = data;
+	@Override
+	public int getId() {
+		return id;
 	}
 
-	void addData(T data){
-		data_node = data;
+	@Override
+	public boolean addEdge(Vertex v, int weight) {
+		
+		if(v.equals(this))
+			return false;
+		
+		if(this.containsEdge(v))
+			return false;
+		
+		links.add(new Link(this,v,weight));
+		return true;
+		
 	}
 	
-	T getData() {
-		return data_node;
-	}
-	
-	void addAdjacent(Node<T> adj, int weight) {
+	public boolean removeEdge(Vertex v) {
 		
-		if(adj.equals(this))
-			return;
+		int i = 0;
 		
-		if(!adjacent.isEmpty()) {
-			
-			ListIterator<Edge> list_iter = adjacent.listIterator();
+		if(!links.isEmpty()) {
+			ListIterator<Link> list_iter = links.listIterator();
 			Edge nxt;
-					
+			
 			while(list_iter.hasNext()){
-				
 				nxt = list_iter.next();
-				if(adj.equals(nxt.node))
-					return;
+				if(((Node)v).equals((Node)nxt.getFinishVertex())) {
+					links.remove(i);
+					return true;
+				}
+				i++;
 			}
-		
 		}
-		
-		adjacent.add(new Edge(adj,weight));
-		adj.adjacent.add(new Edge(this,weight));
+			
+		return false;
 	}
 	
+	@Override
+	public boolean containsEdge(Vertex v) {
+		
+		Edge edge = findEdge(v);
+		if(edge == null)
+			return false;
+				
+		if(edge.getFinishVertex() == v)
+			return true;
+		
+		return false;
+	}
+	
+	@Override
+	public Edge findEdge(Vertex v) {
+		
+		if(!links.isEmpty()) {
+			ListIterator<Link> list_iter = links.listIterator();
+			Edge nxt;
+			
+			while(list_iter.hasNext()){
+				nxt = list_iter.next();
+				if(((Node)v).equals((Node)nxt.getFinishVertex()))
+					return nxt;
+			}
+		}
+		
+		return null;
+	}
+	
+	public Edge[] getAllEdges() {
+				
+		if(links.isEmpty())
+			return new Edge[0];
+		
+		int n_edges = degreeOf();
+		Edge[] edges = new Edge[n_edges];
+		
+		ListIterator<Link> list_iter = links.listIterator();
+		Edge nxt;
+		int i = 0;
+		
+		while(list_iter.hasNext()){
+			nxt = list_iter.next();
+			edges[i++] = nxt;
+		}
+		
+		return edges;
+	}
+	
+	@Override
+	public int degreeOf() {		
+		return links.size();
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -78,34 +123,33 @@ public class Node<T> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		@SuppressWarnings("unchecked")
-		Node<T> other = (Node<T>) obj;
+		Node other = (Node) obj;
 		if (id != other.id)
 			return false;
 		return true;
 	}
 	
 	@Override
-	public String toString() {
+	public String print() {
 		
-		ListIterator<Edge> list_iter = adjacent.listIterator();
-		int adj[][] = new int[adjacent.size()][2];
+		ListIterator<Link> list_iter = links.listIterator();
+		int links_m[][] = new int[links.size()][2];
 		int cnt = 0;
 		
-		if(!adjacent.isEmpty()) {
+		if(!links.isEmpty()) {
 			
-			Edge nxt;			
+			Link nxt;			
 			while(list_iter.hasNext()) {
 				
 				nxt = list_iter.next();
-				adj[cnt][0] = nxt.node.id;
-				adj[cnt++][1] = nxt.weight;
+				links_m[cnt][0] = nxt.getFinishVertex().getId();
+				links_m[cnt++][1] = nxt.getWeight();
 			}
 		}
 		
 		String str = "";
-		for(int j=0; j<adjacent.size(); j++) {
-			str += "  Node " + adj[j][0] + ", weight " + adj[j][1] + "\n";
+		for(int j=0; j<links.size(); j++) {
+			str += "  Node " + links_m[j][0] + ", weight " + links_m[j][1] + "\n";
 		}
 		
 		return "Node " + id + "\n" + str;

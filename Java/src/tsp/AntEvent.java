@@ -1,5 +1,6 @@
 package tsp;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class AntEvent extends Event {
@@ -8,15 +9,13 @@ public class AntEvent extends Event {
   private final int nextNode;
   public final Ant ant;
 
-  AntEvent(double g, Ant a){
+  AntEvent(double currTime, double g, Ant a){
     
     ant = a;
-    double time = 0;
+    nextNode = ant.getNextNode();
+
     gamma = g;
-
-    nextNode = 1;
-
-    setEventTime(time);
+    setEventTime( currTime + expRandom(gamma * ant.getNextNodeWeigth(nextNode)) );
   }
 
   public void incEvent(){
@@ -26,12 +25,14 @@ public class AntEvent extends Event {
   @Override
   public LinkedList<Event> doEvent(){
 
+    ant.move(nextNode);
+    System.out.println(" → " + nextNode + " at time: " +  this.getEventTime());
     incEvent();
-    if(nextNode == 1 && gamma == 0){
-      return null;
-    }
 
-    return null;
+    LinkedList<Event> antEvents = new LinkedList<Event>();
+    antEvents.push(new AntEvent(this.getEventTime(), gamma, ant));
+
+    return antEvents;
   }
 
 }
