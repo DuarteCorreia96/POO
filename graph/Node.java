@@ -31,6 +31,7 @@ public class Node implements Vertex{
 		
 	}
 	
+	@Override
 	public boolean removeEdge(Vertex v) {
 		
 		int i = 0;
@@ -130,7 +131,7 @@ public class Node implements Vertex{
 	}
 	
 	@Override
-	public String print() {
+	public String toString() {
 		
 		ListIterator<Link> list_iter = links.listIterator();
 		int links_m[][] = new int[links.size()][2];

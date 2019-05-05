@@ -74,6 +74,11 @@ public class Link implements Edge{
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Node " + v1.getId() + " → Node " + v2.getId() + "(" + weight + ")";
+	}
 	
 
 }

@@ -9,5 +9,4 @@ public interface Vertex {
 	Edge findEdge(Vertex v);
 	Edge[] getAllEdges();
 	int degreeOf();
-	String print();
 }
