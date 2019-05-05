@@ -1,162 +1,71 @@
 package graph;
-import java.util.ArrayList;
 
-public class TSPGraph implements Graph{
+public class TSPGraph extends UndirectedGraph{
 	
-	private final int n;
-	private ArrayList<Node> nodes;
-	
-	public TSPGraph(int n) {
-		this.n = n;
-		nodes = new ArrayList<Node>(n);
-		
-		for(int j=0; j<n; j++)
-			nodes.add(j, new Node());
-	}
-	
-	@Override
-	public int getSize() {
-		return n;
-	}
-	
-	@Override
-	public Vertex findVertex(int id) {
-		if(id > n)
-			return null;
-		
-		return nodes.get(id-1);
-	}
-	
-	private boolean existingVertices(Vertex v1, Vertex v2) {
-		if(v1 == null)	return false;
-		if(v2 == null)	return false;	
-		return true;
+	private double[][] pheromones;
+	private int W;
+
+	public TSPGraph(int n, int[][] info) {
+		super(n);
+		pheromones = new double[n][n];
+		TSPGraphBuilder(info);
+		computeW();
 	}
 
-	@Override
-	public boolean addEdge(int id1, int id2) {		
-		Vertex v1 = findVertex(id1);
-		Vertex v2 = findVertex(id2);
-		if(!existingVertices(v1,v2))	return false;
-		
-		return (v1.addEdge(v2, DEFAULT_EDGE_WEIGHT) && v2.addEdge(v1, DEFAULT_EDGE_WEIGHT));
-	}
-
-	@Override
-	public boolean addEdge(int id1, int id2, int weight) {	
-		Vertex v1 = findVertex(id1);
-		Vertex v2 = findVertex(id2);
-		if(!existingVertices(v1,v2))	return false;
-		
-		if(weight < 1)	return false;
-		
-		return (v1.addEdge(v2, weight) && v2.addEdge(v1, weight));
-	}
-
-	@Override
-	public void addVertex() {
-		Node n = new Node();
-		nodes.add(n);
-	}
-	
-	public boolean containsEdge(int id1, int id2) {
-		Vertex v1 = findVertex(id1);
-		Vertex v2 = findVertex(id2);
-		if(!existingVertices(v1,v2))	return false;
-		
-		if(((Node)v1).equals((Node)v2))
-			return false;
-		
-		if(v1.containsEdge(v2))
-			return false;
-		
-		return true;
-	}
-	
-	@Override
-	public boolean containsVertex(int id) {
-		return (findVertex(id) != null)? true:false;
-	}
-
-	@Override
-	public int degreeOf(int id) {
-		Vertex v = findVertex(id);
-		if(!containsVertex(id))	return 0;
-		return v.degreeOf();
-	}
-
-	@Override
-	public Edge[] getAllEdges(int id) {
-		Vertex v = findVertex(id);
-		if(!containsVertex(id))	return new Edge[0];
-		return v.getAllEdges();
-	}
-
-	@Override
-	public int getEdgeWeight(int id1, int id2) {
-		Vertex v1 = findVertex(id1);
-		Vertex v2 = findVertex(id2);
-		if(!existingVertices(v1,v2))	return 0;
-		
-		for(Node j:nodes) {
-			if(j.equals(v1)) {
-				return j.findEdge(v2).getWeight();
-			}
+	private void TSPGraphBuilder(int[][] info) {
+		for(int j=0; j<info.length; j++) {
+			addEdge(info[j][0],info[j][1],info[j][2]);
 		}
-		
-		return 0;
+			
 	}
-
-	@Override
-	public boolean removeEdge(int id1, int id2) {
-		return false;
-	}
-
-	@Override
-	public boolean removeVertex(int id) {		
-		return false;
-	}
-
-	@Override
-	public boolean setEdgeWeight(int id1, int id2, int weight) {
-		
-		Vertex v1 = findVertex(id1);
-		Vertex v2 = findVertex(id2);
-		if(!existingVertices(v1,v2))	return false;
-		
-		if(weight < 1)	return false;
-		
-		for(Node j:nodes) {
-			if(j.equals(v1)) {
-				j.findEdge(v2).setWeight(weight);
-				break;
-			}
-		}
-		
-		for(Node j:nodes) {
-			if(j.equals(v2)) {
-				j.findEdge(v1).setWeight(weight);
-				break;
-			}
-		}	
-		return true;
-		
-	}
-
-	@Override
-	public Vertex[] getAllVertices() {
-		return (Vertex[])nodes.toArray();
-	}
-		
-	@Override
-	public String toString() {
-		
-		String str = "";
+	
+	private void computeW() {
 		for(int j=0; j<n; j++) {
-			str += nodes.get(j).print();
+			for(int k=j+1; k<n; k++) {
+				if(!containsEdge(j+1,k+1))	continue;
+				W += nodes[j].findEdge(findVertex(k+1)).getWeight();
+			}
 		}
 		
-		return "\n-> Graph \n\n" + str;
+	}
+	
+	public int getW() {
+		return W;
+	}
+	
+	public boolean checkEdgeEvaporation(int id1, int id2) {
+		return (pheromones[id1-1][id2-1] > 0)?	true:false;
+	}
+	
+	public void layPheromones(int path[], double amount) {
+		for(int j=0; j<path.length-1;j++) {
+			pheromones[path[j]-1][path[j+1]-1] += amount;
+			pheromones[path[j+1]-1][path[j]-1] += amount;
+		}
+	}
+	
+	public int getCycleCost(int path[]) {
+		int cost = 0;
+		
+		for(int j=0; j<path.length-1;j++) {
+			cost += findVertex(path[j]).findEdge(findVertex(path[j+1])).getWeight();
+		}
+		
+		return cost;
+	}
+	
+	public double getEdgePheromones(int id1, int id2) {
+		if(!containsEdge(id1,id2))	return -1;
+		return pheromones[id1-1][id2-1];
+	}
+	
+	
+	public boolean decrementEdgePheromones(int id1, int id2, double amount) {
+		if(!containsEdge(id1,id2))	return false;
+		
+		pheromones[id1-1][id2-1] -= amount;
+		pheromones[id2-1][id1-1] -= amount;
+		return true;
 	}
 
 }
