@@ -14,7 +14,7 @@ public class Ant {
   private final TSPGraph maze;
 
   private int currNode;
-  private int nodeCount;
+  private int nodeCount = 1;
   private int[] visited;
 
   public double[][] pheromones;
@@ -26,16 +26,14 @@ public class Ant {
 
     beta = b;
     alpha = a;
-
     maze = m;
+    
     nestNode = nest;
     currNode = nest;
 
     visited = new int[nNodes + 1];
     Arrays.fill(visited, -1);
-
     visited[0] = nest; 
-    nodeCount = 1;
   }
   
   public boolean isVisited(int node) {
@@ -125,7 +123,7 @@ public class Ant {
 
   public void cleanVisited(){
 
-    for(int i = 0; i < visited.length; i++){
+    for(int i = 1; i < visited.length; i++){
       if(i != currNode && visited[i] >= nodeCount)
         visited[i] = -1;
     }
@@ -175,7 +173,7 @@ public class Ant {
       str += " → " + path[i];
     }
 
-    str += "\n Counter: " + nodeCount;
+    str += "\n Counter: " + nodeCount + "\n";
     return str;
   }
 } 

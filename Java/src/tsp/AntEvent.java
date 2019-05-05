@@ -1,6 +1,6 @@
 package tsp;
 
-import java.util.Arrays;
+// import java.util.Arrays;
 import java.util.LinkedList;
 
 public class AntEvent extends Event {
@@ -19,7 +19,7 @@ public class AntEvent extends Event {
   }
 
   public void incEvent(){
-    incEEvent();
+    incMEvent();
   }
 
   @Override
@@ -30,7 +30,12 @@ public class AntEvent extends Event {
     incEvent();
 
     LinkedList<Event> antEvents = new LinkedList<Event>();
-    antEvents.push(new AntEvent(this.getEventTime(), gamma, ant));
+    
+    if(!ant.isHamiltonian()) {
+      antEvents.push(new AntEvent(this.getEventTime(), gamma, ant));
+    } else {
+      antEvents = null;
+    }
 
     return antEvents;
   }
