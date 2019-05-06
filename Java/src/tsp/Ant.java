@@ -223,14 +223,14 @@ public class Ant {
     public static String bestPathString() {
 
         int[] path = bestCycle;
-        
+
         if(bestCycle == null)
             return "";
 
         String str = "{" + path[0];
 
         for (int i = 1; i < path.length && path[i] != -1; i++) {
-            str += ", " + path[i];
+            str += "," + path[i];
         }
 
         str += "}";

@@ -15,16 +15,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-        double tau = 100;
+        double tau = 30;
         int nAnts = 5;
 
         int nestNode = 5;
         double alpha = 1;
         double beta = 1;
         double gamma = 1;
-        double delta = 0.1;
+        double delta = 1;
         double rho = 0.01;
-        double eta = .1;
+        double eta = 1;
 
         int[][] info = new int[8][3];
         info[0][0] = 1; info[0][1] = 3; info[0][2] = 6;
