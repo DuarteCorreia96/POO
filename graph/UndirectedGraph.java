@@ -1,5 +1,23 @@
 package graph;
 
+/**
+ * The {@code UndirectGraph} class implements the methods provided by the {@code Graph} interface. As the name of the class suggests
+ * it implements a graph whose edges are not directed, there is no distinction between inward or outward edges. Furthermore, it was established
+ * that the number of nodes of the graph remains constant for all times after an instance of this class is created. The size of the graph is kept
+ * on a <i>final</i> variable.<p>
+ * 
+ * For the reasons above mentioned, methods for inward or outward edges were labelled as <i>@Depreciated</i>. Similarly, no implementation was
+ * provided for {@code Graph.removeEdge(...)}.<p>
+ * 
+ * The vertices of the graph are stored in a fixed-size array ordered by their index. This graph is implemented using 
+ * <strong>adjacency lists</strong> and, therefore, the methods of {@code Vertex} are fully employed.
+ * 
+ * @author Duarte Correia
+ * @author Joao Pinto
+ * @author Jose Bastos
+ * @see Node
+ */
+
 public class UndirectedGraph implements Graph{
 	
 	protected final int n;
@@ -27,12 +45,8 @@ public class UndirectedGraph implements Graph{
 	}
 
 	@Override
-	public boolean addEdge(int id1, int id2) {
-		if(containsEdge(id1,id2))	return false;
-		Vertex v1 = findVertex(id1);
-		Vertex v2 = findVertex(id2);
-		
-		return (v1.addEdge(v2, DEFAULT_EDGE_WEIGHT) && v2.addEdge(v1, DEFAULT_EDGE_WEIGHT));
+	public boolean addEdge(int id1, int id2) {		
+		return addEdge(id1,id2,DEFAULT_EDGE_WEIGHT);
 	}
 
 	@Override
@@ -75,11 +89,35 @@ public class UndirectedGraph implements Graph{
 		if(!containsVertex(id))	return 0;
 		return findVertex(id).degreeOf();
 	}
+	
+	@Deprecated
+	public int degreeOfInward(int id) {
+		if(!containsVertex(id))	return 0;
+		return findVertex(id).degreeOf();
+	}
+	
+	@Deprecated
+	public int degreeOfOutward(int id) {
+		if(!containsVertex(id))	return 0;
+		return findVertex(id).degreeOf();
+	}
 
 	@Override
 	public Edge[] getAllEdges(int id) {
 		if(!containsVertex(id))	return new Edge[0];
 		return findVertex(id).getAllEdges();
+	}
+	
+	@Deprecated
+	public Edge[] getInwardEdges(int id) {
+		if(!containsVertex(id))	return new Edge[0];
+		return findVertex(id).getInwardEdges();
+	}
+	
+	@Deprecated
+	public Edge[] getOutwardEdges(int id) {
+		if(!containsVertex(id))	return new Edge[0];
+		return findVertex(id).getOutwardEdges();
 	}
 
 	@Override
@@ -91,7 +129,7 @@ public class UndirectedGraph implements Graph{
 		return v1.findEdge(v2).getWeight();
 	}
 
-	@Deprecated
+	@Override
 	public boolean removeEdge(int id1, int id2) {
 		if(!containsEdge(id1,id2))	return false;
 		Vertex v1 = findVertex(id1);

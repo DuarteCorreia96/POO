@@ -1,10 +1,34 @@
 package graph;
 
+/**
+ * The {@code TSPGraph} class extends the {@code UndirectedGraph} class. It implements additional methods regarding
+ * the update of <i>pheromones</i> of the various edges of the graph (<i>read</i> on <i>Ant Colony Optimisation</i> for solving
+ * the <i>Travelling Salesman Problem</i>).<p>
+ * 
+ * The <i>pheromone level</i> of each edge is stored in a <i>n x n</i> matrix where each entry <i>(i,j)</i> saves the 
+ * <i>pheromone level</i> of the edge connecting node <i>i</i> and <i>j</i>.
+ * 
+ * @author Duarte Correia
+ * @author Joao Pinto
+ * @author Jose Bastos
+ * @see UndirectedGraph
+ * @see EventEvaporation
+ */
+
 public class TSPGraph extends UndirectedGraph{
 	
 	private double[][] pheromones;
 	private int W;
-
+	
+	/**
+	 * Constructor for the {@code TSPGraph} objects.
+	 * 
+	 * @param n number of vertices in the graph
+	 * @param info a <i>E x 3</i> integer matrix where <i>E</i> corresponds to 
+	 * the number of edges to be inserted in the graph. Each line of matrix must 
+	 * contain the ID of the <i>first</i> vertex, the ID of the <i>second</i> vertex 
+	 * and the <i>weight</i> of the connection between the two, respectively.
+	 */
 	public TSPGraph(int n, int[][] info) {
 		super(n);
 		pheromones = new double[n][n];
@@ -29,14 +53,42 @@ public class TSPGraph extends UndirectedGraph{
 		
 	}
 	
+	/**
+	 * Computing the sum of the weight of all edges (W) is required for
+	 * obtaining the amount of pheromones is to be laid down by an <i>Ant</i>
+	 * once it completes one <i>hamiltonian</i> cycle (<i>read</i> on 
+	 * <i>Ant Colony Optimisation</i> for solving the <i>Travelling Salesman Problem</i>).
+	 * 
+	 * @return W the sum of the weight of all edges in the graph
+	 */
 	public int getW() {
 		return W;
 	}
 	
+	/**
+	 * Checks if for the edge between the two vertices as already been
+	 * scheduled or occurred an <i>evaporation</i> event.
+	 * 
+	 * @param id1 identifier of the first vertex.
+	 * @param id2 identifier of the second vertex.
+	 * @return {@code true} if for the edge connecting the two vertices has already been
+	 * scheduled or occurred an <i>evaporation</i> event 
+	 */
 	public boolean checkEdgeEvaporation(int id1, int id2) {
 		return (pheromones[id1-1][id2-1] > 0)?	true:false;
 	}
 	
+	
+	/**
+	 * Given a path with the visited vertices, this method adds the specified amount of
+	 * pheromones to all edges belonging to this collection. The visited vertices are identified
+	 * by their ID. For instance, let a path be {1,2,3}. This method lays down pheromones on the
+	 * following edges: 1-2, 2-3.
+	 * 
+	 * @param path an array containing the IDs of the visited vertices
+	 * @param amount the value of pheromones which is to added to all edges contained
+	 * in the path array
+	 */
 	public void layPheromones(int path[], double amount) {
 		for(int j=0; j<path.length-1;j++) {
 			pheromones[path[j]-1][path[j+1]-1] += amount;
@@ -44,7 +96,17 @@ public class TSPGraph extends UndirectedGraph{
 		}
 	}
 	
-	public int getCycleCost(int path[]) {
+	
+	/**
+	 * Given a path with the visited vertices, this method computes the sum of weight of all edges
+	 * connecting these vertices. The visited vertices are identified by their ID. 
+	 * For instance, let a path be {1,2,3}. The method returns the sum of the cost of the following
+	 * edges: 1-2, 2-3.
+	 * 
+	 * @param path an array containing the IDs of the visited vertices
+	 * @return the cost of all edges contained in the set of visited vertices
+	 */
+	public int getPathCost(int path[]) {
 		int cost = 0;
 		
 		for(int j=0; j<path.length-1;j++) {
@@ -54,12 +116,30 @@ public class TSPGraph extends UndirectedGraph{
 		return cost;
 	}
 	
+	/**
+	 * Returns the <i>pheromone level</i> of the edge connecting the two vertices.<p>
+	 * The method returns -1 if the specified edge does not exist.
+	 * 
+	 * @param id1 identifier of the first vertex
+	 * @param id2 identifier of the second vertex
+	 * @return the <i>pheromone level</i> of the edge connecting the two vertices
+	 */
 	public double getEdgePheromones(int id1, int id2) {
 		if(!containsEdge(id1,id2))	return -1;
 		return pheromones[id1-1][id2-1];
 	}
 	
 	
+	/**
+	 * Decrements the <i>pheromone level</i> of the edge connecting the two vertices,
+	 * following a <i>Evaporation event</i> for the specified edge.
+	 * 
+	 * @param id1 identifier of the first vertex
+	 * @param id2 identifier of the second vertex
+	 * @param amount the value of pheromones to be decremented of the specified edge
+	 * connecting the two vertices
+	 * @return {@code true} if the edge exists
+	 */
 	public boolean decrementEdgePheromones(int id1, int id2, double amount) {
 		if(!containsEdge(id1,id2))	return false;
 		
