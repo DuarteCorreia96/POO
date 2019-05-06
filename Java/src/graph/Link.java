@@ -30,7 +30,7 @@ public class Link implements Edge{
 
 	@Override
 	public void setFinishVertex(Vertex v) {
-		v2 = v;
+		v2 = v;	
 	}
 
 	@Override
@@ -72,6 +72,11 @@ public class Link implements Edge{
 		} else if (!v2.equals(other.v2))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Node " + v1.getId() + " → Node " + v2.getId() + "(" + weight + ")";
 	}
 	
 

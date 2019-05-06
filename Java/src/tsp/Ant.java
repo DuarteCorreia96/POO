@@ -7,30 +7,42 @@ import java.util.Random;
 public class Ant {
 
   private static Random generator = new Random();
+  private static int Hamiltonians = 0;
 
   private final int nestNode;
   private final double alpha;
   private final double beta;
+  private final double gamma;
   private final TSPGraph maze;
 
   private int currNode;
   private int nodeCount = 1;
   private int[] visited;
 
-  public double[][] pheromones;
+  /**
+   * Creates a {@code Ant} with the parameters given.
+   * Also inicializes {@code visited} and {@code nodes}
+   * in order to be prepared to transverse the maze 
+   * 
+   * @param nest  The nest node of the colony
+   * @param alpha alpha value of ant
+   * @param beta  beta value of ant
+   * @param gamma proportion of pheromones that the ant leaves
+   * @param maze  graph the ant will transverse
+   * 
+   * @since 1.0
+   */
+  Ant(int nest, double alpha, double beta, double gamma, TSPGraph maze){
 
-  Ant(int nest, double a, double b, TSPGraph m){
-
-    int nNodes = m.getSize();
-    pheromones = new double[nNodes][nNodes];
-
-    beta = b;
-    alpha = a;
-    maze = m;
+    this.alpha = alpha;
+    this.gamma = gamma;
+    this.beta = beta;
+    this.maze = maze;
     
-    nestNode = nest;
-    currNode = nest;
-
+    this.nestNode = nest;
+    this.currNode = nest;
+    
+    int nNodes = maze.getSize();
     visited = new int[nNodes + 1];
     Arrays.fill(visited, -1);
     visited[0] = nest; 
@@ -43,7 +55,7 @@ public class Ant {
       return false;
     */
       
-    if( (visited[node] != -1 && visited[node] < nodeCount ) || node == nestNode)
+    if( visited[node] != -1 || node == nestNode)
       return true;
     
     return false;
@@ -59,7 +71,7 @@ public class Ant {
 
       int fNodeId = edgeList[i].getFinishVertex().getId();
       if( !isVisited(fNodeId) )
-        probNode[i] = (alpha + pheromones[currNode - 1][fNodeId - 1])/(beta + edgeList[i].getWeight());
+        probNode[i] = (alpha + maze.getEdgePheromones(currNode, fNodeId))/(beta + edgeList[i].getWeight());
     }
 
     double sum = 0;
@@ -132,12 +144,11 @@ public class Ant {
   public void move(int nextNode){ 
 
     if(nextNode == nestNode && nodeCount < visited.length - 1){
-      nodeCount = 1;
-      cleanVisited();
+      reset();
       return;
     }
     
-    if(visited[nextNode] > nodeCount || visited[nextNode] == -1){
+    if(visited[nextNode] >= nodeCount || visited[nextNode] == -1){
 
       visited[nextNode] = ++nodeCount;
       currNode = nextNode; 
@@ -150,6 +161,13 @@ public class Ant {
     }
 
   }
+
+  public void reset() {
+
+    Arrays.fill(visited, -1);
+    visited[0] = nestNode;
+    nodeCount = 1;
+  }
     
   public int getNest(){
     return nestNode;
@@ -159,21 +177,36 @@ public class Ant {
     return currNode;
   }
 
+  public TSPGraph getMaze() {
+    return maze;
+  }
+
   public int[] getVisited() {
     return visited;
+  }
+
+  public static int getHamiltonianNo() {
+    return Hamiltonians;
+  }
+
+  public static void incHamiltonians() {
+    Hamiltonians++;
+  }
+
+  public double getGamma() {
+    return gamma;
   }
 
   @Override
   public String toString() {
 
-    String str = "visited nodes:" + Arrays.toString(visited) + "\n";
     int[] path = doPath();
-    str += "path: " + path[0];
+    String str = "path: {" + path[0];
     for(int i = 1; i < path.length && path[i] != -1; i++){
-      str += " → " + path[i];
+      str += ", " + path[i];
     }
 
-    str += "\n Counter: " + nodeCount + "\n";
+    str += "} Counter: " + nodeCount;
     return str;
   }
 } 
