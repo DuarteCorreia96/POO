@@ -61,10 +61,6 @@ public class Main {
     System.out.println("\n EEvents done: " + Event.getEEvents());
     System.out.println(" MEvents done: " + Event.getMEvents());
     System.out.println(" Cycles found: " + Ant.getHamiltonianNo() + "\n"); 
-
-    for (int i = 0; i < nAnts; i++) {
-      System.out.println(colony[i]);
-    } 
   }
 
 }

@@ -62,8 +62,6 @@ public class AntEvent extends Event {
         newEvents.push(new EvaporationEvent(getEventTime(), path[i], path[i+1], maze));
       }
 
-      System.out.println("Found hamiltonian cycle at t: " + this.getEventTime());
-      System.out.println(ant + "\n");
       ant.reset();
     }
 
