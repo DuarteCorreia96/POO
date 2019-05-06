@@ -15,14 +15,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-        double tau = 30;
+        double tau = 10;
         int nAnts = 5;
 
         int nestNode = 5;
         double alpha = 1;
         double beta = 1;
         double gamma = 1;
-        double delta = 1;
+        double delta = .1;
         double rho = 0.01;
         double eta = 1;
 
@@ -57,11 +57,7 @@ public class Main {
             currTime = currEvent.getEventTime();
             if ( currTime >= observationCounter * tau / 20) {
 
-                System.out.println("Observation number: \t" + observationCounter);
-                System.out.println("\t Present instant:              \t" + currTime);
-                System.out.println("\t Number of move events:        \t" + Event.getMEvents());
-                System.out.println("\t Number of evaporation events: \t" + Event.getEEvents());
-                System.out.println("\t Hamiltonian cycle:            \t" + Ant.bestPathString() + "\n");
+                Main.printObservation(observationCounter, currTime, Event.getMEvents(), Event.getEEvents(), Ant.bestPathString());
                 observationCounter++;
             }
 
@@ -72,12 +68,17 @@ public class Main {
             }
         }
 
-        System.out.println("Observation number: \t" + observationCounter);
-        System.out.println("\t Present instant:              \t" + tau);
-        System.out.println("\t Number of move events:        \t" + Event.getMEvents());
-        System.out.println("\t Number of evaporation events: \t" + Event.getEEvents());
-        System.out.println("\t Hamiltonian cycle:            \t" + Ant.bestPathString() + "\n");
+        Main.printObservation(observationCounter, tau, Event.getMEvents(), Event.getEEvents(), Ant.bestPathString());
 
+    }
+
+    public static void printObservation(int observation, double currTime, int MEvents, int EEvents, String path) {
+
+        System.out.println("Observation number: \t" + observation);
+        System.out.println("\t Present instant:              \t" + currTime);
+        System.out.println("\t Number of move events:        \t" + MEvents);
+        System.out.println("\t Number of evaporation events: \t" + EEvents);
+        System.out.println("\t Hamiltonian cycle:            \t" + path + "\n");
     }
 
 }
