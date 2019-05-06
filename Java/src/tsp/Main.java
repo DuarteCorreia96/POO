@@ -50,7 +50,7 @@ public class Main {
         LinkedList<Event> events;
         Event currEvent;
         double currTime = 0;
-        int observationCounter = 0;
+        int observationCounter = 1;
         while (PEC.peek() != null) {
             
             currEvent = PEC.poll();
