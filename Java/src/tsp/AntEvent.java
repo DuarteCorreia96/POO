@@ -48,7 +48,7 @@ public class AntEvent extends Event {
     ant.move(nextNode);
     incEvent();
 
-    LinkedList<Event> antEvents = new LinkedList<Event>();
+    LinkedList<Event> newEvents = new LinkedList<Event>();
     
     if(ant.isHamiltonian()) {
 
@@ -57,13 +57,18 @@ public class AntEvent extends Event {
       int[] path = ant.doPath();
 
       maze.layPheromones(path, ant.getGamma()*maze.getW() / maze.getCycleCost(path));
+
+      for(int i = 0; i < path.length - 1; i++){
+        newEvents.push(new EvaporationEvent(getEventTime(), path[i], path[i+1], maze));
+      }
+
       System.out.println("Found hamiltonian cycle at t: " + this.getEventTime());
       System.out.println(ant + "\n");
       ant.reset();
     }
 
-    antEvents.push(new AntEvent(this));
-    return antEvents;
+    newEvents.push(new AntEvent(this));
+    return newEvents;
   }
 
 }
