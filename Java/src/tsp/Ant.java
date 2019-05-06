@@ -70,9 +70,9 @@ public class Ant {
 
         for (int i = 0; i < edgeList.length; i ++) {
 
-        int fNodeId = edgeList[i].getFinishVertex().getId();
-        if ( !isVisited(fNodeId) )
-            probNode[i] = (alpha + maze.getEdgePheromones(currNode, fNodeId))/(beta + edgeList[i].getWeight());
+            int fNodeId = edgeList[i].getFinishVertex().getId();
+            if ( !isVisited(fNodeId) )
+                probNode[i] = (alpha + maze.getEdgePheromones(currNode, fNodeId))/(beta + edgeList[i].getWeight());
         }
 
         double sum = 0;
