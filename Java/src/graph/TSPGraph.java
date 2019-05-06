@@ -65,28 +65,28 @@ public class TSPGraph extends UndirectedGraph{
 	}
 	
 	/**
-   * Decrements edege pheromones {@code rho} units
-   * @param id1 Start {@code node} id 
-   * @param id2 Finish {@code node} id
-   * @return {@code true} if edege still has pheromones, {@code false} if its empty 
-   */
+     * Decrements edege pheromones {@code rho} units
+     * @param id1 Start {@code node} id 
+     * @param id2 Finish {@code node} id
+     * @return {@code true} if edege still has pheromones, {@code false} if its empty 
+    */
 	public boolean decrementEdgePheromones(int id1, int id2) {
     
-    double newlevel = pheromones[id1 - 1][id2 - 1] - rho;
+        double newlevel = pheromones[id1 - 1][id2 - 1] - rho;
 
-    pheromones[id1-1][id2-1] = newlevel > 0 ? newlevel : 0;
-    pheromones[id2-1][id1-1] = newlevel > 0 ? newlevel : 0;
+        pheromones[id1-1][id2-1] = newlevel > 0 ? newlevel : 0;
+        pheromones[id2-1][id1-1] = newlevel > 0 ? newlevel : 0;
 
-		return newlevel > 0;
-  }
+	    return newlevel > 0;
+    }
   
-  /**
-   * Returns {@code eta} value from the TSPGraph; {@code eta} is the mean value of
-   * the exponential distribuiton used to simulate the time in which the edge
-   * pheromones are evaporated
-   * @return {@code eta}
-   */
-  public double getEta() {
-    return eta;
-  }
+    /**
+     * Returns {@code eta} value from the TSPGraph; {@code eta} is the mean value of
+     * the exponential distribuiton used to simulate the time in which the edge
+     * pheromones are evaporated
+     * @return {@code eta}
+     */
+    public double getEta() {
+        return eta;
+    }
 }
