@@ -27,7 +27,7 @@ public abstract class Event {
 
     /**
      * Does the actions of the event 
-     * @return
+     * @return A list of events orginated by the one being simulated.
      */
     public abstract LinkedList<Event> doEvent();
 
