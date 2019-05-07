@@ -64,14 +64,13 @@ public class AntEvent extends Event {
                 Ant.setBestCost(pathCost);
             }
 
-            maze.layPheromones(path, ant.getGamma() * maze.getW() / pathCost );
-
             for (int i = 0; i < path.length - 1; i++){
-
+                
                 if ( maze.getEdgePheromones(i, i + 1) == 0)
-                    newEvents.push(new EvaporationEvent(getEventTime(), path[i], path[i+1], maze));
+                newEvents.push(new EvaporationEvent(getEventTime(), path[i], path[i+1], maze));
             }
             
+            maze.layPheromones(path, ant.getGamma() * maze.getW() / pathCost );
             ant.reset();
         }
 
