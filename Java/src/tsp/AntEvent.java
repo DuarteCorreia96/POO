@@ -3,8 +3,6 @@ package tsp;
 // import java.util.Arrays;
 import java.util.LinkedList;
 
-import graph.TSPGraph;
-
 public class AntEvent extends Event {
 
     private final double delta;
@@ -54,7 +52,7 @@ public class AntEvent extends Event {
 
             TSPGraph maze = ant.getMaze(); 
             int[] path = ant.doPath();
-            int pathCost = maze.getCycleCost(path);
+            int pathCost = maze.getPathCost(path);
 
             if (pathCost < Ant.getBestCost()){
                 Ant.setBestCycle(path);

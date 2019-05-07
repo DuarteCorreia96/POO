@@ -1,5 +1,13 @@
 package graph;
 
+/**
+ * The {@code Link} class provides an implementation for the methods of the {@code Edge} interface.
+ * 
+ * @author Duarte Correia
+ * @author Joao Pinto
+ * @author Jose Bastos
+ */
+
 public class Link implements Edge{
 	
 	private int weight;
@@ -30,7 +38,8 @@ public class Link implements Edge{
 
 	@Override
 	public void setFinishVertex(Vertex v) {
-		v2 = v;	
+		v2 = v;
+		
 	}
 
 	@Override

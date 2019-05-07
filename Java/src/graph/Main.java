@@ -1,5 +1,7 @@
 package graph;
 
+import tsp.TSPGraph;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -19,7 +21,7 @@ public class Main {
 		System.out.println(graph.getW());
 		
 		int path[] = {1,3,2,5,4,1};
-		System.out.println(graph.getCycleCost(path));
+		System.out.println(graph.getPathCost(path));
 		graph.layPheromones(path, 0.5);
 		System.out.println(graph.getEdgePheromones(1,3));
 		System.out.println(graph.getEdgePheromones(1,5));

@@ -2,6 +2,19 @@ package graph;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+/**
+ * The {@code Node} class is an implementation of the {@code Vertex}. It provides the methods for the graphs whose implementation
+ * utilises adjacency lists. Each {@code Node} has a linked-list provided by {@code java.util.LinkedList} of objects of 
+ * type {@code Link}, the class which implements the {@code Edge} interface.<p>
+ * 
+ * The assignment of the ID of a vertex is handled by the constructor of the class.
+ * 
+ * @author Duarte Correia
+ * @author Joao Pinto
+ * @author Jose Bastos
+ * @see Link
+ */
+
 public class Node implements Vertex{
 	
 	private final int id;
@@ -83,6 +96,8 @@ public class Node implements Vertex{
 		return null;
 	}
 	
+	
+	@Override
 	public Edge[] getAllEdges() {
 				
 		if(links.isEmpty())
@@ -104,8 +119,92 @@ public class Node implements Vertex{
 	}
 	
 	@Override
+	public Edge[] getInwardEdges() {
+		
+		if(links.isEmpty())
+			return new Edge[0];
+		
+		int n_edges = degreeOfInward();
+		Edge[] edges = new Edge[n_edges];
+		
+		ListIterator<Link> list_iter = links.listIterator();
+		Edge nxt;
+		int i = 0;
+		
+		while(list_iter.hasNext()){
+			nxt = list_iter.next();
+			if(nxt.getFinishVertex().getId() == this.id)
+				edges[i++] = nxt;
+		}
+		
+		return edges;
+	}
+	
+	@Override
+	public Edge[] getOutwardEdges() {
+		
+		if(links.isEmpty())
+			return new Edge[0];
+		
+		int n_edges = degreeOfInward();
+		Edge[] edges = new Edge[n_edges];
+		
+		ListIterator<Link> list_iter = links.listIterator();
+		Edge nxt;
+		int i = 0;
+		
+		while(list_iter.hasNext()){
+			nxt = list_iter.next();
+			if(nxt.getStartVertex().getId() == this.id)
+				edges[i++] = nxt;
+		}
+		
+		return edges;
+	}
+	
+	@Override
 	public int degreeOf() {		
 		return links.size();
+	}
+	
+	@Override
+	public int degreeOfInward() {
+		
+		if(links.isEmpty())
+			return 0;
+		
+		int n_edges = 0;
+		
+		ListIterator<Link> list_iter = links.listIterator();
+		Edge nxt;
+		
+		while(list_iter.hasNext()){
+			nxt = list_iter.next();
+			if(nxt.getFinishVertex().getId() == this.id)
+				n_edges++;
+		}
+		
+		return n_edges;
+	}
+	
+	@Override
+	public int degreeOfOutward() {
+		
+		if(links.isEmpty())
+			return 0;
+		
+		int n_edges = 0;
+		
+		ListIterator<Link> list_iter = links.listIterator();
+		Edge nxt;
+		
+		while(list_iter.hasNext()){
+			nxt = list_iter.next();
+			if(nxt.getStartVertex().getId() == this.id)
+				n_edges++;
+		}
+		
+		return n_edges;
 	}
 	
 	@Override

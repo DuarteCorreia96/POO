@@ -5,13 +5,14 @@
       "name": "CodeLens (Launch) - Main",
       "request": "launch",
       "mainClass": "tsp.Main",
-      "projectName": "Java"
+      "classPaths": ["Java/bin"]
     },
     {
       "type": "java",
       "name": "CodeLens (Launch) - Main",
       "request": "launch",
-      "mainClass": "graph.Main"
+      "mainClass": "graph.Main",
+      "classPaths": ["Java/bin"]
     }
   ]
 }

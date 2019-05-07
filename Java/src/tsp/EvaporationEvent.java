@@ -3,8 +3,6 @@ package tsp;
 // import java.util.Arrays;
 import java.util.LinkedList;
 
-import graph.TSPGraph;
-
 public class EvaporationEvent extends Event {
 
     private final int node1;
