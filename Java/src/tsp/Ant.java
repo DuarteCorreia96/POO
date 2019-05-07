@@ -4,6 +4,42 @@ import graph.*;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * A {@code Ant} is used to transverse a {@code TSPGraph} in order to find a
+ * solution to the <i>Traveling Salesman Problem</i>, that is, the
+ * <i>Hamiltonian Cycle</i> wth less cost.
+ * <p>
+ * 
+ * Each Ant has a reference to the {@code TSPGraph} that will transverse, a
+ * {@code nestNode} which is the end and start of every <i>Hamiltonian Cycle</i>
+ * and a {@code visited} array which saves the current current path of the
+ * {@code Ant}. It also saves the constants {@code alpha}, {@code beta} and
+ * {@code gamma} that define how the ant chooses the next node and how much
+ * <i>pheromones</i> it leaves on her trail after finishing a <i>Hamiltonian
+ * Cycle</i>.
+ * <p>
+ * 
+ * 
+ * In summary {@code Ant} provides methods for: <p>
+ * <ul>
+ * <li> Move the ant to the next node.
+ * <li> Check if a node has alrady been visited.
+ * <li> Get the ant choice for next node.
+ * <li> Get the next node weight.
+ * <li> Get the current path of the ant.
+ * <li> Check if the current path is already a <i>Hamiltonian Cycle</i>
+ * <li> Get the current best clyce and weight.
+ * </ul> 
+ * 
+ * The class has a static variable that saves the best cycle found so far and 
+ * its cost. <p>
+ * 
+ * @author Duarte Correia
+ * @author Joao Pinto
+ * @author Jose Bastos
+ * @see TSPGraph
+ * 
+ */ 
 public class Ant {
 
     private static Random generator = new Random();
@@ -31,7 +67,6 @@ public class Ant {
      * @param gamma proportion of pheromones that the ant leaves
      * @param maze  graph the ant will transverse
      * 
-     * @since 1.0
     */
     Ant(int nest, double alpha, double beta, double gamma, TSPGraph maze){
 
@@ -49,6 +84,12 @@ public class Ant {
         visited[0] = nest; 
     }
   
+    /**
+     * Checks if a node has been visited by the ant. <p>
+     * 
+     * @param node
+     * @return {@code true} if the ant has visited the node, {@code false} if not.
+     */
     public boolean isVisited(int node) {
 
         /* Force nestNode after final
@@ -62,6 +103,13 @@ public class Ant {
         return false;
     }
 
+    /**
+     * Chooses randomly ant's next node based on variables {@code alpha}, {@code beta},
+     * the weigths and the <i>pheromones level</i> of each {@code Edge} of the current
+     * node and the visited status of next node possibilities.
+     * 
+     * @return {@code nextNode} node choosen by the ant to be next
+     */
     public int getNextNode() {
 
         int nextNode = -1;
@@ -96,20 +144,33 @@ public class Ant {
         return nextNode;
     }
 
-    public double getNextNodeWeigth(int nextNode) {
+    /**
+     * Gets {@code nextNode} weight when going from ant's current node.
+     * 
+     * @param nextNode node the ant will move to.
+     * @return {@code weight} the weight of the edge between current node 
+     * and next.
+     * 
+     * @see Link#getWeight()
+     */
+    public double getNextNodeWeight(int nextNode) {
 
-        double weigth = 1;
+        double weight = 1;
         Edge[] edgeList = maze.getAllEdges(currNode);
         for (Edge edge : edgeList){
             if (edge.getFinishVertex().getId() == nextNode){
-                weigth = edge.getWeight();
+                weight = edge.getWeight();
                 break;
             }
         }
 
-        return weigth;
+        return weight;
     }
 
+    /**
+     * 
+     * @return
+     */
     public int[] doPath() {
         
         int[] path = new int[visited.length];

@@ -138,8 +138,8 @@ public class Node implements Vertex{
 		}
 		
 		return edges;
-	}
-	
+    }
+
 	@Override
 	public Edge[] getOutwardEdges() {
 		

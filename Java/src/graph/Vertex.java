@@ -75,7 +75,7 @@ public interface Vertex {
 	 * @return an array containing all edges connected to this vertex
 	 */
 	Edge[] getAllEdges();
-	
+
 	/**
 	 * Returns an array containing all inward edges connected to the this vertex.<p>
 	 * If the vertex contains no edges directed to itself, an empty array is returned.

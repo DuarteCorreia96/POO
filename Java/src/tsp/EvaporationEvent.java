@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 public class EvaporationEvent extends Event {
 
+    private static int eevents = 0;
     private final int node1;
     private final int node2;
     private final TSPGraph maze;
@@ -42,7 +43,11 @@ public class EvaporationEvent extends Event {
 
     @Override
     public void incEvent() {
-        incEEvent();
+        eevents++;
+    }
+
+    public static int getEventNo() {
+        return eevents;
     }
 
     public TSPGraph getMaze() {

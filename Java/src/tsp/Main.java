@@ -56,7 +56,8 @@ public class Main {
             currTime = currEvent.getEventTime();
             if ( currTime >= observationCounter * tau / 20) {
 
-                Main.printObservation(observationCounter, currTime, Event.getMEvents(), Event.getEEvents(), Ant.bestPathString());
+                Main.printObservation(observationCounter, currTime, 
+                        AntEvent.getEventNo(), EvaporationEvent.getEventNo(), Ant.bestPathString());
                 observationCounter++;
             }
 
@@ -67,7 +68,8 @@ public class Main {
             }
         }
 
-        Main.printObservation(observationCounter, tau, Event.getMEvents(), Event.getEEvents(), Ant.bestPathString());
+        Main.printObservation(observationCounter, tau, AntEvent.getEventNo(), EvaporationEvent.getEventNo(),
+                Ant.bestPathString());
 
     }
 

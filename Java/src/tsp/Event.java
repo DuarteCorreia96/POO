@@ -6,8 +6,6 @@ import java.util.Random;
 public abstract class Event {
 
     private double eventTime;
-    private static int eevents = 0;
-    private static int mevents = 0;
 
     private static Random random = new Random();
 
@@ -26,22 +24,4 @@ public abstract class Event {
     public double getEventTime() {
         return eventTime;
     }
-
-    public void incEEvent() {
-        eevents++;
-    }
-
-    public void incMEvent() {
-        mevents++;
-    }
-
-    public static int getEEvents() {
-        return eevents;
-    }
-
-    public static int getMEvents() {
-        return mevents;
-    }
-
 }
-

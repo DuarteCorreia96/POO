@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 public class AntEvent extends Event {
 
+    private static int mevents = 0;
     private final double delta;
     private final int nextNode;
     public final Ant ant;
@@ -15,7 +16,7 @@ public class AntEvent extends Event {
         this.delta = delta;
         this.nextNode = ant.getNextNode();
         
-        setEventTime( currTime + expRandom(delta * ant.getNextNodeWeigth(nextNode)) );
+        setEventTime( currTime + expRandom(delta * ant.getNextNodeWeight(nextNode)) );
     }
 
     AntEvent(AntEvent antEvent){
@@ -24,7 +25,7 @@ public class AntEvent extends Event {
         this.delta = antEvent.getDelta();
         this.nextNode = ant.getNextNode();
         
-        setEventTime( antEvent.getEventTime() + expRandom(delta * ant.getNextNodeWeigth(nextNode)) );
+        setEventTime( antEvent.getEventTime() + expRandom(delta * ant.getNextNodeWeight(nextNode)) );
     }
 
     public Ant getAnt() {
@@ -37,7 +38,11 @@ public class AntEvent extends Event {
 
     @Override
     public void incEvent(){
-        incMEvent();
+        mevents++;
+    }
+
+    public static int getEventNo() {
+        return mevents;
     }
 
     @Override
@@ -61,8 +66,11 @@ public class AntEvent extends Event {
 
             maze.layPheromones(path, ant.getGamma() * maze.getW() / pathCost );
 
-            for (int i = 0; i < path.length - 1; i++)
-                newEvents.push(new EvaporationEvent(getEventTime(), path[i], path[i+1], maze));
+            for (int i = 0; i < path.length - 1; i++){
+
+                if ( maze.getEdgePheromones(i, i + 1) == 0)
+                    newEvents.push(new EvaporationEvent(getEventTime(), path[i], path[i+1], maze));
+            }
             
             ant.reset();
         }

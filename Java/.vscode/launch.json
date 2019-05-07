@@ -1,0 +1,19 @@
+{
+    "configurations": [
+      
+    {
+        "type": "java",
+        "name": "TSP - Main",
+        "request": "launch",
+        "mainClass": "tsp.Main",
+        "projectName": "Java"
+    },
+    {
+        "type": "java",
+        "name": "Graph - Main",
+        "request": "launch",
+        "mainClass": "graph.Main",
+        "projectName": "Java"
+    }
+  ]
+}

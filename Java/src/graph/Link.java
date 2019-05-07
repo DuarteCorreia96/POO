@@ -25,7 +25,6 @@ public class Link implements Edge{
 		this.weight = weight;
 	}
 
-
 	@Override
 	public int getWeight() {
 		return weight;
