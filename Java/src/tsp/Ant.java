@@ -168,8 +168,10 @@ public class Ant {
     }
 
     /**
+     * Creats the path transversed by the ant so far and 
+     * returns it.
      * 
-     * @return
+     * @return {@code path} of the so far.
      */
     public int[] doPath() {
         
@@ -187,6 +189,12 @@ public class Ant {
         return path;
     }
 
+    /**
+     * Checks if the ant has reached a <i>Hamilton Cycle</i>.
+     * 
+     * @return {@code true} if current path is a <i>Hamiltonian Cycle</i>, 
+     * {@code false} if not.
+     */
     public boolean isHamiltonian() {
 
         if (nodeCount == visited.length && currNode == nestNode)
@@ -195,7 +203,7 @@ public class Ant {
         return false;
     }
 
-    public void cleanVisited(){
+    private void cleanVisited(){
 
         for (int i = 1; i < visited.length; i++){
             if (i != currNode && visited[i] >= nodeCount)
@@ -203,6 +211,13 @@ public class Ant {
         }
     }
 
+    /**
+     * Moves ant for next node, updating it's path and dleting from it's path
+     * nodes that will not create a cycle, e.g, if current path is 1->2->3 and 
+     * next node is 2 it will move to node 2 and update path to 1->2.
+     * 
+     * @param nextNode node that the ant will go next.
+     */
     public void move(int nextNode){ 
 
         if (nextNode == nestNode && nodeCount < visited.length - 1){
@@ -224,6 +239,9 @@ public class Ant {
 
     }
 
+    /**
+     * Resets the ant to nest node and it's path.
+     */
     public void reset() {
 
         Arrays.fill(visited, -1);
@@ -231,38 +249,81 @@ public class Ant {
         nodeCount = 1;
     }
     
+    /**
+     * Returns ant's nest node.
+     * 
+     * @return {@code nestNode} id
+     */
     public int getNest(){
         return nestNode;
     }
   
+    /**
+     * Returns ant's current node.
+     * 
+     * @return {@code currNode} id
+     */
     public int getNode(){
         return currNode;
     }
 
+    /**
+     * Returns the {@code TSPGraph} that the ant is transversing.
+     * 
+     * @return {@code maze} 
+     */
     public TSPGraph getMaze() {
         return maze;
     }
 
+    /**
+     * Returns the array that saves the path and visited nodes 
+     * by the ant. Array[0] is the nest node and Array[node] is 
+     * {@code -1} if node is not visited and a {@code int > 1} 
+     * for visited in which {@code int} is the order of visit.
+     * 
+     * @return {@code visited} array which saves the path and visitied nodes.
+     */
     public int[] getVisited() {
         return visited;
     }
 
+    /**
+     * Returns {@code gamma} of the ant. Gamma is the ratio of how many 
+     * pheromones are left behind by the ant after fininshing a <i>Hamiltonian 
+     * Cycle</i>.
+     * 
+     * @return {@code gamma}
+     */
     public double getGamma() {
         return gamma;
     }
 
+    /**
+     * Returns the cost of the best <i>Hamilton Cycle</i> found so far by every ant.
+     * 
+     * @return {@code bestCycleCost} cost of best <i>Hamilton Cycle</i>.
+     */
     public static int getBestCost() {
         return bestCycleCost;
     }
 
-    public static void setBestCost(int cost) {
+    /**
+     * Sets the new best <i>Hamilton Cycle</i> found by the ants and its cost.
+     * 
+     * @param path the new best <i>Hamilton Cycle</i> found.
+     * @param cost the new best cost of a <i>Hamilton Cycle</i> found.
+     */
+    public static void setBestCycle(int[] path, int cost) {
         bestCycleCost = cost;
-    }
-
-    public static void setBestCycle(int[] path) {
         bestCycle = path;
     }
 
+    /**
+     * Returns the best <i>Hamilton Cycle</i> found so far.
+     * 
+     * @return {@code bestCycle} path of the best <i>Hamilton Cycle</i>
+     */
     public static int[] getBestCycle() {
         return bestCycle;
     }
@@ -281,6 +342,11 @@ public class Ant {
         return str;
     }
 
+    /**
+     * Returns the best <i>Hamilton Cycle</i> in String form
+     * 
+     * @return String of the best <i>Hamilton Cycle</i>
+     */
     public static String bestPathString() {
 
         int[] path = bestCycle;

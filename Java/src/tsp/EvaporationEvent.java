@@ -1,6 +1,5 @@
 package tsp;
 
-// import java.util.Arrays;
 import java.util.LinkedList;
 
 public class EvaporationEvent extends Event {
@@ -31,19 +30,13 @@ public class EvaporationEvent extends Event {
     @Override
     public LinkedList<Event> doEvent() {
 
-        incEvent();
-
         LinkedList<Event> nextEvaporation = new LinkedList<Event>();
-
+        
         if (maze.decrementEdgePheromones(node1, node2))
-            nextEvaporation.push(new EvaporationEvent(this));
-
-        return nextEvaporation;
-    }
-
-    @Override
-    public void incEvent() {
+        nextEvaporation.push(new EvaporationEvent(this));
+        
         eevents++;
+        return nextEvaporation;
     }
 
     public static int getEventNo() {

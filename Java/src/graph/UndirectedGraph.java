@@ -16,6 +16,7 @@ package graph;
  * @author Joao Pinto
  * @author Jose Bastos
  * @see Node
+ * @see Graph
  */
 
 public class UndirectedGraph implements Graph{

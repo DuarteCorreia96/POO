@@ -13,6 +13,7 @@ import java.util.ListIterator;
  * @author Joao Pinto
  * @author Jose Bastos
  * @see Link
+ * @see Vertex
  */
 
 public class Node implements Vertex{

@@ -6,6 +6,8 @@ package graph;
  * @author Duarte Correia
  * @author Joao Pinto
  * @author Jose Bastos
+ * 
+ * @see Edge
  */
 
 public class Link implements Edge{
