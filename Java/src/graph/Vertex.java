@@ -29,7 +29,7 @@ public interface Vertex {
 	
 	/**
 	 * Adds a new outward edge between this vertex and the other vertex passed as a parameter.<p>
-	 * <strong>As it is not allowed to have multiple outward edges pointed to same node</strong>,
+	 * <strong>As it is not allowed to have multiple outward edges pointing to same node</strong>,
 	 * if an edge is found between this and another vertex by {@code Vertex.containsEdge(...)},
 	 * that edge is not inserted and {@code false} is returned.
 	 * 
@@ -69,16 +69,16 @@ public interface Vertex {
 	
 	/**
 	 * Returns an array containing all edges connected to the this vertex.<p>
-	 * The distinction of inward or outward edges is not performed.<p>
+	 * The distinction of inward or outward edges is not done.<p>
 	 * If the vertex is disconnected from all other, an {@code empty} array is returned.
 	 * 
 	 * @return an array containing all edges connected to this vertex
 	 */
 	Edge[] getAllEdges();
-
+	
 	/**
 	 * Returns an array containing all inward edges connected to the this vertex.<p>
-	 * If the vertex contains no edges directed to itself, an empty array is returned.
+	 * If the vertex contains no edges directed to itself, an {@code empty} array is returned.
 	 * 
 	 * @return an array containing all inward edges connected to this vertex
 	 */
@@ -86,7 +86,7 @@ public interface Vertex {
 	
 	/**
 	 * Returns an array containing all inward edges departing from this vertex.<p>
-	 * If the vertex contains no edges pointing to other vertices, an empty array is returned.
+	 * If the vertex contains no edges pointing to other vertices, an {@code empty} array is returned.
 	 * 
 	 * @return an array containing all outward edges connected to this vertex
 	 */
@@ -95,15 +95,15 @@ public interface Vertex {
 	
 	/**
 	 * Returns the number of edge touching this vertex(the <i>degree</i> of the vertex).<p>
-	 * The distinction of inward or outward edges is not performed.<p>
+	 * The distinction of inward or outward edges is not done.<p>
 	 * 
 	 * @return the number of edges touching this vertex
 	 */
 	int degreeOf();
 	
 	/**
-	 * Returns the number of inward edges of this vertex In other words, returns the count
-	 * of edges directed to this vertex.<p>
+	 * Returns the number of inward edges of this vertex. In other words, returns the count of
+	 * the number of edges directed to this vertex.<p>
 	 * 
 	 * @return the number of edges incoming to this vertex
 	 */
@@ -111,8 +111,8 @@ public interface Vertex {
 	
 	
 	/**
-	 * Returns the number of outward edges of this vertex. In other words, returns the count
-	 * of edges that depart from this vertex.<p>
+	 * Returns the number of outward edges of this vertex. In other words, returns the count of
+	 * the number of edges that depart from this vertex.<p>
 	 * 
 	 * @return the number of edges leaving from the specified vertex
 	 */

@@ -1,7 +1,7 @@
 package graph;
 
 /**
- * Whether a graph is implemented using an adjacency matrix or a adjacency list, <i>edges</i> are a essential element of a graph
+ * Whether a graph is implemented using an adjacency matrix or a adjacency list, <i>edges</i> are an essential element of a graph
  * as these establish the connection between two nodes.<p>
  * 
  * An edge, at its simplest implementation, consists on a <i>start</i> vertex and a <i>finish</i> vertex and the weight of the connection
