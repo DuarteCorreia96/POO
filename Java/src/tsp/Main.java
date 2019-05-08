@@ -56,14 +56,4 @@ public class Main {
             }
         }
     }
-
-    public static void printObservation(int observation, double currTime, int MEvents, int EEvents, String path) {
-
-        System.out.println("Observation number: \t" + observation);
-        System.out.println("\t Present instant:              \t" + currTime);
-        System.out.println("\t Number of move events:        \t" + MEvents);
-        System.out.println("\t Number of evaporation events: \t" + EEvents);
-        System.out.println("\t Hamiltonian cycle:            \t" + path + "\n");
-    }
-
 }
