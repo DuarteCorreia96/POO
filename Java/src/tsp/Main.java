@@ -16,7 +16,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //InitialValues test = new InitialValues();
         Xml.validateFile(args[0]);
         Xml.readValues(args[0]);
 
@@ -44,6 +43,7 @@ public class Main {
             colony[i] = new Ant(nestNode, alpha, beta, gamma, maze);
             PEC.add(new AntEvent(0.0, delta, colony[i]));
         }
+        
         PEC.add(new ObservationEvent(tau));
     
         LinkedList<Event> events; 
