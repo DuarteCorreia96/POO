@@ -1,16 +1,16 @@
 
-n = 18;
-a = randi([1 13], n, n);
+n = 30;
+a = randi([1 15], n, n);
 
 a(a > 10) = 0;
 
-fileID = fopen('teste1.xml','w');
+fileID = fopen('test4.xml','w');
 
 fprintf(fileID, '<?xml version="1.0" encoding="UTF-8"?>\n');
 fprintf(fileID, '<!DOCTYPE simulation SYSTEM "simulation.dtd">\n');
 fprintf(fileID, '<simulation finalinst="300.0" antcolsize="200" plevel="0.5">\n');
 fprintf(fileID, '	<graph nbnodes="%d" nestnode="1">\n',n);
-for i = 1:n-1
+for i = 1:n
     fprintf(fileID, '		<node nodeidx="%d">\n', i);
     for j = i+1:n
         if( a(i,j) ~= 0)

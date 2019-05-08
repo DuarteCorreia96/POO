@@ -24,7 +24,39 @@
         "request": "launch",
         "mainClass": "tsp.Main",
         "projectName": "Java",
-        "args": "bin/teste1.xml"
+        "args": "teste1.xml"
+    },
+    {
+        "type": "java",
+        "name": "2 TSP - Main",
+        "request": "launch",
+        "mainClass": "tsp.Main",
+        "projectName": "Java",
+        "args": "teste2.xml"
+    },
+    {
+        "type": "java",
+        "name": "3 TSP - Main",
+        "request": "launch",
+        "mainClass": "tsp.Main",
+        "projectName": "Java",
+        "args": "teste3.xml"
+    },
+    {
+        "type": "java",
+        "name": "4 TSP - Main",
+        "request": "launch",
+        "mainClass": "tsp.Main",
+        "projectName": "Java",
+        "args": "teste4.xml"
+    },
+    {
+        "type": "java",
+        "name": "5 TSP - Main",
+        "request": "launch",
+        "mainClass": "tsp.Main",
+        "projectName": "Java",
+        "args": "teste5.xml"
     },
     {
         "type": "java",
