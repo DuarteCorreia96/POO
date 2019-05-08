@@ -44,32 +44,17 @@ public class Main {
             colony[i] = new Ant(nestNode, alpha, beta, gamma, maze);
             PEC.add(new AntEvent(0.0, delta, colony[i]));
         }
+        PEC.add(new ObservationEvent(tau));
     
         LinkedList<Event> events; 
-        Event currEvent;
-        double currTime = 0;
-        int observationCounter = 1;
         while (PEC.peek() != null) {
             
-            currEvent = PEC.poll();
-            currTime = currEvent.getEventTime();
-            if ( currTime >= observationCounter * tau / 20) {
+            events = PEC.poll().doEvent(); 
 
-                Main.printObservation(observationCounter, currTime, 
-                        AntEvent.getEventNo(), EvaporationEvent.getEventNo(), Ant.bestPathString());
-                observationCounter++;
-            }
-
-            events = currEvent.doEvent(); 
-
-            while (events.peek() != null && events.peek().getEventTime() < tau) {
+            while (events.peek() != null && events.peek().getEventTime() <= tau) {
                 PEC.add(events.poll());
             }
         }
-
-        Main.printObservation(observationCounter, tau, AntEvent.getEventNo(), EvaporationEvent.getEventNo(),
-                Ant.bestPathString());
-
     }
 
     public static void printObservation(int observation, double currTime, int MEvents, int EEvents, String path) {
