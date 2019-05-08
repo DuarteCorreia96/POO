@@ -1,7 +1,6 @@
 package tsp;
 
-import java.util.ArrayList;
-
+import java.util.List;
 import graph.*;
 
 /**
@@ -33,16 +32,15 @@ public class TSPGraph extends UndirectedGraph{
      * Constructor for the {@code TSPGraph} objects.
      * 
      * @param n    number of vertices in the graph
-     * @param info a <i>E x 3</i> integer matrix where <i>E</i> corresponds to the
-     *             number of edges to be inserted in the graph. Each line of matrix
-     *             must contain the ID of the <i>first</i> vertex, the ID of the
-     *             <i>second</i> vertex and the <i>weight</i> of the connection
+     * @param info a <i>list</i> of integer arrays with three entries. Each entry of 
+     *             this array must contain the ID of the <i>first</i> vertex, the ID of 
+     *             the <i>second</i> vertex and the <i>weight</i> of the connection
      *             between the two, respectively.
      * @param rho Amount of pheromones evaporated by the edges after each evaporation
-     * @param eat Average value of the exponential distribution of the time between each 
+     * @param eta Average value of the exponential distribution of the time between each 
      *             evaporation
      */
-	public TSPGraph(int n, ArrayList<int[]> info, double rho, double eta) {
+	public TSPGraph(int n, List<int[]> info, double rho, double eta) {
 
         super(n);
         this.rho = rho;
@@ -50,16 +48,59 @@ public class TSPGraph extends UndirectedGraph{
 		pheromones = new double[n][n];
 		TSPGraphBuilder(info);
 		computeW();
-	}
-
-	private void TSPGraphBuilder(ArrayList<int[]> info) {
-		for(int[] j : info) {
-			addEdge(j[0], j[1], j[2]);
-		}
-			
-	}
+    }
+    
+    private void TSPGraphBuilder(List<int[]> info) {
+        for(int[] j : info){
+            try {
+                addEdge(j[0], j[1], j[2]);
+			} catch (SameVertex e) {
+				e.printStackTrace();
+			}
+        }
+    }
     
     /**
+	 * Asserts if an edge connects the two vertices.
+	 * 
+	 * @param id1 the identifier of the first vertex.
+	 * @param id2 the identifier of the second vertex.
+	 * @return {@code true} if the edge exists
+	 */
+	private boolean containsEdge(int id1, int id2) {
+		try {
+			Vertex v1 = findVertex(id1);
+			Vertex v2 = findVertex(id2);
+			
+			if(((Node)v1).equals((Node)v2))
+				return false;
+			
+			if(!v1.containsEdge(v2))
+				return false;
+			
+		} catch (VertexNotFound e) {
+			System.out.println(e);
+			return false;
+		}
+		
+		return true;
+	}
+    
+	private void computeW() {
+		for(int j=0; j<n; j++) {
+			for(int k=j+1; k<n; k++) {
+				if(!containsEdge(j+1,k+1))	continue;
+				
+				try {
+					W += nodes[j].findEdge(findVertex(k+1)).getWeight();
+				} catch (VertexNotFound e) {
+					System.out.println(e);
+				}			
+			}
+		}
+    }
+    
+	/**
      * Computing the sum of the weight of all edges (W) is required for obtaining
      * the amount of pheromones is to be laid down by an <i>Ant</i> once it
      * completes one <i>hamiltonian</i> cycle (<i>read</i> on <i>Ant Colony
@@ -67,16 +108,6 @@ public class TSPGraph extends UndirectedGraph{
      * 
      * @return W the sum of the weight of all edges in the graph
      */
-	private void computeW() {
-		for(int j=0; j<n; j++) {
-			for(int k=j+1; k<n; k++) {
-				if(!containsEdge(j+1,k+1))	continue;
-				W += nodes[j].findEdge(findVertex(k+1)).getWeight();
-			}
-		}
-		
-	}
-	
 	public int getW() {
 		return W;
 	}
@@ -121,13 +152,17 @@ public class TSPGraph extends UndirectedGraph{
      * @return the cost of all edges contained in the set of visited vertices
      */
 	public int getPathCost(int path[]) {
-
-        int cost = 0;
-            for(int j = 0; j<path.length-1;j++) {
-                cost += findVertex(path[j]).findEdge(findVertex(path[j+1])).getWeight();
-            }
-            
-            return cost;
+		int cost = 0;
+		
+		for(int j=0; j<path.length-1;j++) {
+			try {
+				cost += findVertex(path[j]).findEdge(findVertex(path[j+1])).getWeight();
+			} catch (VertexNotFound e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return cost;
 	}
     
     /**

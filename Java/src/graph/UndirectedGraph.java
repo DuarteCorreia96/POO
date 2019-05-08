@@ -4,25 +4,32 @@ package graph;
  * The {@code UndirectGraph} class implements the methods provided by the {@code Graph} interface. As the name of the class suggests
  * it implements a graph whose edges are not directed, there is no distinction between inward or outward edges. Furthermore, it was established
  * that the number of nodes of the graph remains constant for all times after an instance of this class is created. The size of the graph is kept
- * on a <i>final</i> variable.<p>
+ * in a <i>final</i> variable.<p>
  * 
  * For the reasons above mentioned, methods for inward or outward edges were labelled as <i>@Depreciated</i>. Similarly, no implementation was
- * provided for {@code Graph.removeEdge(...)}.<p>
+ * provided for {@code Graph.removeVertex(...)}.<p>
  * 
  * The vertices of the graph are stored in a fixed-size array ordered by their index. This graph is implemented using 
- * <strong>adjacency lists</strong> and, therefore, the methods of {@code Vertex} are fully employed.
+ * <strong>adjacency lists</strong> and, therefore, the methods of {@code Vertex} are fully implemented.
  * 
  * @author Duarte Correia
  * @author Joao Pinto
  * @author Jose Bastos
  * @see Node
- * @see Graph
  */
 
 public class UndirectedGraph implements Graph{
 	
 	protected final int n;
 	protected Node[] nodes;
+	
+	/**
+	 * Constructs an undirected graph with <strong>n</strong>
+	 * vertices.
+	 * 
+	 * @param n the number of vertices in the graph
+	 * to be created
+	 */
 	
 	public UndirectedGraph(int n) {
 		this.n = n;
@@ -36,107 +43,149 @@ public class UndirectedGraph implements Graph{
 	public int getSize() {
 		return n;
 	}
-	
+		
 	@Override
-	public Vertex findVertex(int id) {
+	public Vertex findVertex(int id) throws VertexNotFound {
 		if(id > n || id < 1)
-			return null;
+			throw new VertexNotFound(id);
 		
 		return nodes[id-1];
 	}
-
+	
 	@Override
-	public boolean addEdge(int id1, int id2) {		
+	public boolean addEdge(int id1, int id2) throws SameVertex {
+		if(id1 == id2)	throw new SameVertex();
 		return addEdge(id1,id2,DEFAULT_EDGE_WEIGHT);
 	}
 
 	@Override
-	public boolean addEdge(int id1, int id2, int weight) {
-		if(containsEdge(id1,id2))	return false;
-		Vertex v1 = findVertex(id1);
-		Vertex v2 = findVertex(id2);
-		
+	public boolean addEdge(int id1, int id2, int weight) throws SameVertex {
 		if(weight < 1)	return false;
-		
-		return (v1.addEdge(v2, weight) && v2.addEdge(v1, weight));
+				
+		try {
+			Vertex v1 = findVertex(id1);
+			Vertex v2 = findVertex(id2);
+			if(id1 == id2)	throw new SameVertex();
+			return (v1.addEdge(v2, weight) && v2.addEdge(v1, weight));
+		} catch (VertexNotFound e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Deprecated
 	public void addVertex() {}
-	
+		
 	@Override
-	public boolean containsEdge(int id1, int id2) {
-		if(!containsVertex(id1) || !containsVertex(id2))	return false;
-		
-		Vertex v1 = findVertex(id1);
-		Vertex v2 = findVertex(id2);
-		
-		if(((Node)v1).equals((Node)v2))
-			return false;
-		
-		if(!v1.containsEdge(v2))
-			return false;
-		
-		return true;
-	}
-	
-	@Override
-	public boolean containsVertex(int id) {
-		return (findVertex(id) != null)? true:false;
+	public Edge findEdge(int id1, int id2) throws EdgeNotFound, SameVertex, VertexNotFound{				
+		try {
+			Vertex v1 = findVertex(id1);
+			Vertex v2 = findVertex(id2);
+			
+			if(((Node)v1).equals((Node)v2))
+				throw new SameVertex();
+			
+			Edge edge = v1.findEdge(v2);
+			if(edge == null)
+				throw new EdgeNotFound(id1,id2);
+			
+			return edge;
+			
+		} catch (VertexNotFound e) {
+			e.printStackTrace();
+			throw new VertexNotFound("One the vertices of the edge " + id1 + " → " + id2 + " does not exist");
+		}
 	}
 
 	@Override
 	public int degreeOf(int id) {
-		if(!containsVertex(id))	return 0;
-		return findVertex(id).degreeOf();
+		try {
+			return findVertex(id).degreeOf();
+		}
+		catch (VertexNotFound e) {
+			e.printStackTrace();
+			return 0;	
+		}
 	}
 	
 	@Deprecated
 	public int degreeOfInward(int id) {
-		if(!containsVertex(id))	return 0;
-		return findVertex(id).degreeOf();
+		try {
+			return findVertex(id).degreeOfInward();
+		}
+		catch (VertexNotFound e) {
+			e.printStackTrace();
+			return 0;	
+		}
 	}
 	
 	@Deprecated
 	public int degreeOfOutward(int id) {
-		if(!containsVertex(id))	return 0;
-		return findVertex(id).degreeOf();
+		try {
+			return findVertex(id).degreeOfOutward();
+		}
+		catch (VertexNotFound e) {
+			e.printStackTrace();
+			return 0;	
+		}
 	}
 
 	@Override
 	public Edge[] getAllEdges(int id) {
-		if(!containsVertex(id))	return new Edge[0];
-		return findVertex(id).getAllEdges();
+		try {
+			return findVertex(id).getAllEdges();
+		}
+		catch (VertexNotFound e) {
+			e.printStackTrace();
+			return new Edge[0];
+		}
 	}
 	
 	@Deprecated
 	public Edge[] getInwardEdges(int id) {
-		if(!containsVertex(id))	return new Edge[0];
-		return findVertex(id).getInwardEdges();
+		try {
+			return findVertex(id).getInwardEdges();
+		}
+		catch (VertexNotFound e) {
+			e.printStackTrace();
+			return new Edge[0];
+		}				
 	}
 	
 	@Deprecated
 	public Edge[] getOutwardEdges(int id) {
-		if(!containsVertex(id))	return new Edge[0];
-		return findVertex(id).getOutwardEdges();
+		try {
+			return findVertex(id).getOutwardEdges();
+		}
+		catch (VertexNotFound e) {
+			e.printStackTrace();
+			return new Edge[0];
+		}				
 	}
 
 	@Override
-	public int getEdgeWeight(int id1, int id2) {
-		if(!containsEdge(id1,id2))	return 0;
-		Vertex v1 = findVertex(id1);
-		Vertex v2 = findVertex(id2);
-		
-		return v1.findEdge(v2).getWeight();
+	public int getEdgeWeight(int id1, int id2) {	
+		try {
+			return findEdge(id1,id2).getWeight();
+		}
+		catch (EdgeNotFound | SameVertex | VertexNotFound e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 
 	@Override
-	public boolean removeEdge(int id1, int id2) {
-		if(!containsEdge(id1,id2))	return false;
-		Vertex v1 = findVertex(id1);
-		Vertex v2 = findVertex(id2);
-		
-		return (v1.removeEdge(v2) && v2.removeEdge(v1));
+	public boolean removeEdge(int id1, int id2) {	
+		try {
+			Edge edge = findEdge(id1,id2);
+			Vertex v1 = edge.getStartVertex();
+			Vertex v2 = edge.getFinishVertex();
+			return (v1.removeEdge(v2) && v2.removeEdge(v1));
+		}
+		catch (EdgeNotFound | SameVertex | VertexNotFound e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Deprecated
@@ -146,15 +195,17 @@ public class UndirectedGraph implements Graph{
 
 	@Override
 	public boolean setEdgeWeight(int id1, int id2, int weight) {
-		if(!containsEdge(id1,id2))	return false;
-		
 		if(weight < 1)	return false;
 		
-		findVertex(id1).findEdge(findVertex(id2)).setWeight(weight);
-		findVertex(id2).findEdge(findVertex(id1)).setWeight(weight);
-		
-		return true;
-		
+		try {		
+			findEdge(id1,id2).setWeight(weight);
+			findEdge(id2,id1).setWeight(weight);
+			return true;
+		}
+		catch (EdgeNotFound | SameVertex | VertexNotFound e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override

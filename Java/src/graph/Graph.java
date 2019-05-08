@@ -4,14 +4,14 @@ package graph;
  * A <i>graph</i> is a set of <i>vertices</i> (sometimes referred to as <i>nodes</i>) interconnected 
  * by <i>edges</i>. These vertices and edges are mathematical abstractions, that is, these can be anything. 
  * In contrast to other data structures such as a {@code List} or a {@code Set}, which consist on a 
- * collection of nodes that are connected to one another. One node can only point the 
- * previous or the following nodes. On the other hand, a <i>graph</i> establishes the concept of network
+ * collection of nodes that are connected to one another, one node can only point to the 
+ * previous or the following node. On the other hand, a <i>graph</i> establishes the concept of network
  * between various nodes.<p>
  * 
  * The {@code Graph} interface provides the fundamental functions that are needed when employing a generic 
  * weighted <i>graph</i> as a data structure, that is to all edges a numeric weight is assigned. Usually, this
  * weight is a positive integer number and, as such, <strong>this interface associates all edges 
- * a positive weight</strong>.<p>
+ * a positive weight</strong>. Moreover, <strong>edges which connect a vertex to itself are not allowed</strong>.<p>
  * 
  * Another aspect to be considered is that <strong>all vertices, independently of their content, are identified 
  * by an integer number, an ID</strong>. In this manner, operations as finding a node, accessing, adding or removing 
@@ -29,7 +29,7 @@ package graph;
  * <li> Adding or removing edges given the IDs of two existing nodes. Notice that in order to implement
  * a directed graph, the {@code Vertex} and {@code Edge} interfaces should be implemented accordingly.
  * <li> Getting and setting the weight of a specific edge given two vertex IDs.
- * <li> Verifying whether a vertex or an edge between two vertices actually exists.
+ * <li> Getting the edge that links to vertices identified by their IDs.
  * <li> Getting a vertex with a specified ID.
  * <li> Obtaining all edges touching the a certain vertex.
  * <li> Retrieving all vertices in the graph.
@@ -59,45 +59,50 @@ public interface Graph {
 	
 	/**
 	 * Given the identifier of a vertex, such vertex is returned from a collection of all nodes
-	 * belonging to the graph. If the vertex with such ID does not exist, confirmed by 
-	 * {@code Graph.containsVertex(...)}, {@code null} is returned. 
+	 * belonging to the graph. If the vertex with such ID does not exist, an exception is thrown. 
 	 * 
 	 * @param id the identifier of the vertex to be found and returned.
 	 * @return the vertex with the specified identifier
+	 * @throws VertexNotFound if the specified ID does not correspond to any vertex belonging
+	 * to the graph
 	 */
-	Vertex findVertex(int id);
+	Vertex findVertex(int id) throws VertexNotFound;
 	
 	/**
 	 * Adds an edge between two vertices.<p>
 	 * It should be noticed that <strong>it is not allowed to have multiple edges connecting the same two nodes</strong>. Hence,
-	 * before adding the new edge, it is verified whether the new edge already exists, using {@code Graph.containsEdge(...)}.<p>
+	 * before adding the new edge, it is verified whether the new edge already exists.<p>
 	 * Should the graph to be implemented to be directed, the order of the IDs given as parameters for this function must
 	 * be fixed. Additionally, the implementation of {@code Vertex} should be done accordingly.<p> 
 	 * Furthermore, as the weight of the edge is not specified, the weight of the new edge is equal to
-	 * {@code Graph.DEFAULT_EDGE_WEIGHT}.
+	 * {@code Graph.DEFAULT_EDGE_WEIGHT}.<p>
+	 * Finally, no edge can be added between one vertex and itself.
 	 * 
 	 * @param id1 the identifier of the first vertex.
 	 * @param id2 the identifier of the second vertex.
 	 * @return {@code true} if the an edge between two vertices specified by the two IDs is inserted
 	 * successfully.
+	 * @throws SameVertex if the new edge is to be inserted connecting a vertex to itself
 	 */
-	boolean addEdge(int id1, int id2);
+	boolean addEdge(int id1, int id2) throws SameVertex;
 	
 	/**
 	 * Adds an edge between two vertices.<p>
 	 * It should be noticed that <strong>it is not allowed to have multiple edges connecting the same two nodes</strong>. Hence,
-	 * before adding the new edge, it is verified whether the new edge already exists {@code Graph.containsEdge(...)}.<p>
+	 * before adding the new edge, it is verified whether the new edge already exists.<p>
 	 * Should the graph to be implemented to be directed, the order of the IDs given as parameters for this function must
 	 * be fixed. Additionally, the implementation of {@code Vertex} should be done accordingly.<p> 
-	 * Furthermore, the weight of new edge needs to be specified. 
+	 * Furthermore, the weight of new edge needs to be specified. This weight must be greater or equal to 1.<p> 
+	 * Finally, no edge can be added between one vertex and itself.
 	 * 
 	 * @param id1 the identifier of the first vertex.
 	 * @param id2 the identifier of the second vertex.
 	 * @param weight the weight of the edge to be inserted between the two vertices.
 	 * @return {@code true} if the an edge between two vertices specified by the two IDs is inserted
 	 * successfully.
+	 * @throws SameVertex if the new edge is to be inserted connecting a vertex to itself
 	 */
-	boolean addEdge(int id1, int id2, int weight);
+	boolean addEdge(int id1, int id2, int weight) throws SameVertex;
 	
 	/**
 	 * Adds a new vertex to the graph. The assignment of the ID of this new vertex should 
@@ -107,28 +112,23 @@ public interface Graph {
 	void addVertex();
 	
 	/**
-	 * Asserts if an edge is connected the vertices indexed by the IDs.<p>
+	 * Returns the edge connecting the vertices indexed by the IDs.<p>
 	 * Should the graph to be implemented to be directed, the order of the IDs given as parameters for this function must
 	 * be fixed.
 	 * 
 	 * @param id1 the identifier of the first vertex.
 	 * @param id2 the identifier of the second vertex.
 	 * @return {@code true} if an edge between the two specified vertices exists
+	 * @throws EdgeNotFound if there is no edge linking the two vertices
+	 * @throws SameVertex if the new edge is to be inserted connecting a vertex to itself
+	 * @throws VertexNotFound if one of the vertices does not exist
 	 */
-	boolean containsEdge(int id1, int id2);
-	
-	/**
-	 * Verifies whether the the vertex with specified ID is present in the graph.
-	 * 
-	 * @param id the ID of the vertex of which existence is to be determined.
-	 * @return {@code true} if the vertex with such ID does actually exist
-	 */
-	boolean containsVertex(int id);
-	
+	Edge findEdge(int id1, int id2) throws EdgeNotFound, SameVertex, VertexNotFound;
+		
 	/**
 	 * Returns the number of edge touching the vertex with the specified ID.
 	 * (the <i>degree</i> of the vertex).<p>
-	 * The distinction of inward or outward edges is not performed.<p>
+	 * The distinction of inward or outward edges is not done.<p>
 	 * The implementation of this method may require the implemented methods of {@code Vertex}
 	 * {@code Edge} interfaces.
 	 * 
@@ -143,7 +143,7 @@ public interface Graph {
 	 * The implementation of this method may require the implemented methods of {@code Vertex}
 	 * {@code Edge} interfaces.
 	 * 
-	 * @param id the ID of the vertex of which inward degree is to be determined.
+	 * @param id the ID of the vertex of which the number of inward edges is to be determined.
 	 * @return the number of edges incoming to the specified vertex
 	 */
 	int degreeOfInward(int id);
@@ -154,7 +154,7 @@ public interface Graph {
 	 * The implementation of this method may require the implemented methods of {@code Vertex}
 	 * {@code Edge} interfaces.
 	 * 
-	 * @param id the ID of the vertex of which outward degree is to be determined.
+	 * @param id the ID of the vertex of which the number of outward edges is to be determined.
 	 * @return the number of edges leaving from the specified vertex
 	 */
 	int degreeOfOutward(int id);
@@ -162,9 +162,9 @@ public interface Graph {
 	
 	/**
 	 * Returns an array containing all edges connected to the specified node.<p>
-	 * The distinction of inward or outward edges is not performed.<p>
+	 * The distinction of inward or outward edges is not done.<p>
 	 * The implementation of this method may require the implemented methods of {@code Vertex}
-	 * {@code Edge} interfaces.<p>
+	 * and {@code Edge} interfaces.<p>
 	 * If the vertex is disconnected from all other, an {@code empty} array is returned.
 	 * 
 	 * @param id the ID of the vertex of which all edges linked to which are returned.
@@ -194,12 +194,10 @@ public interface Graph {
 	 */
 	Edge[] getOutwardEdges(int id);
 	
-	
 	/**
 	 * Returns the weight of the edge linking the two specified nodes.<p>
 	 * Should the graph to be implemented to be directed, the order of the IDs given as parameters for this function must
-	 * be fixed. Additionally, the implementation of {@code Vertex} should be done accordingly.<p> 
-	 * Furthermore, the existence of such edge should be asserted with {@code Graph.containsEdge(...)}.
+	 * be fixed. Additionally, the implementation of {@code Vertex} should be done accordingly.
 	 * 
 	 * @param id1 the identifier of the first vertex.
 	 * @param id2 the identifier of the second vertex.
@@ -210,8 +208,8 @@ public interface Graph {
 	
 	/**
 	 * Removes an edge between the two specified vertices.<p>
-	 * In this case, before removing the an edge, it is verified whether the this edge does indeed exist,
-	 * using {@code Graph.containsEdge(...)}. Should this edge be inexistent and {@code false} is returned.<p> 
+	 * In this case, before removing the an edge, it is verified whether the this edge does indeed exist. 
+	 * Should this edge be inexistent and {@code false} is returned.<p> 
 	 * Should the graph to be implemented to be directed, the order of the IDs given as parameters for this function must
 	 * be fixed. Additionally, the implementation of {@code Vertex} should be done accordingly.<p>
 	 * 
@@ -224,8 +222,8 @@ public interface Graph {
 	/**
 	 * Removes the specified vertex from the graph. Additionally, all inward or outward edges connected to this vertex
 	 * are also deleted.<p>
-	 * If the vertex labelled with the specified ID does not exist, asserted by {@code Graph.containsVertex(...)}, the removal
-	 * of the requested node is unsuccessful and, therefore, {@code false} is returned.
+	 * If the vertex labelled with the specified ID does not exist, the removal
+	 * of the requested node is unsuccessful and, therefore, {@code false} is returned.<p>
 	 * 
 	 * After successfully removing a vertex, the value returned by {@code Graph.getSize()} is be decremented.
 	 * 
@@ -238,8 +236,7 @@ public interface Graph {
 	 * Sets the weight of the edge linking the two specified nodes.<p>
 	 * Should the graph to be implemented to be directed, the order of the IDs given as parameters for this function must
 	 * be fixed. Additionally, the implementation of {@code Vertex} should be done accordingly.<p> 
-	 * Furthermore, the existence of such edge should be asserted with {@code Graph.containsEdge(...)}. If that edge does not
-	 * exist, {@code false} is returned.
+	 * If that edge does not exist, {@code false} is returned.
 	 * 
 	 * @param id1 the identifier of the first vertex.
 	 * @param id2 the identifier of the second vertex.
@@ -249,7 +246,7 @@ public interface Graph {
 	boolean setEdgeWeight(int id1, int id2, int weight);
 	
 	/**
-	 * Returns an array containing all vertices in the graph. If the graph contains <i>zero</i> nodes, an empty array
+	 * Returns an array containing all vertices in the graph. If the graph contains <i>zero</i> nodes, an <i>empty</i> array
 	 * is returned.
 	 * 
 	 * @return an array with all vertices of the graph

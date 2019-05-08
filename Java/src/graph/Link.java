@@ -6,8 +6,6 @@ package graph;
  * @author Duarte Correia
  * @author Joao Pinto
  * @author Jose Bastos
- * 
- * @see Edge
  */
 
 public class Link implements Edge{
@@ -26,6 +24,7 @@ public class Link implements Edge{
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
+
 
 	@Override
 	public int getWeight() {
