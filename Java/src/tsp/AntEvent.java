@@ -109,6 +109,7 @@ public class AntEvent extends Event {
             TSPGraph maze = ant.getMaze(); 
             int[] path = ant.doPath();
             int pathCost = maze.getPathCost(path);
+            
 
             if (pathCost < Ant.getBestCost()){
                 Ant.setBestCycle(path, pathCost);

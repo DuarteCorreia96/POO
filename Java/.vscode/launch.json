@@ -1,12 +1,30 @@
 {
     "configurations": [
+        
       
     {
         "type": "java",
         "name": "TSP - Main",
         "request": "launch",
         "mainClass": "tsp.Main",
-        "projectName": "Java"
+        "projectName": "Java",
+        "args": "bin/data1.xml"
+    },
+    {
+        "type": "java",
+        "name": "Mad TSP - Main",
+        "request": "launch",
+        "mainClass": "tsp.Main",
+        "projectName": "Java",
+        "args": "bin/test1000n800e.xml"
+    },
+    {
+        "type": "java",
+        "name": "1 TSP - Main",
+        "request": "launch",
+        "mainClass": "tsp.Main",
+        "projectName": "Java",
+        "args": "bin/teste1.xml"
     },
     {
         "type": "java",

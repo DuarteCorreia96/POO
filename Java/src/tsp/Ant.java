@@ -180,10 +180,9 @@ public class Ant {
         path[0] = visited[0];
         for (int i = 1; i < visited.length; i++){
 
-            if (visited[i] == -1 || visited[i] > nodeCount)
-                continue;
+            if (visited[i] != -1)
+                path[visited[i]] = i;
 
-            path[visited[i]-1] = i;
         }
 
         return path;
@@ -225,10 +224,10 @@ public class Ant {
             return;
         }
         
-        if (visited[nextNode] >= nodeCount || visited[nextNode] == -1){
+        if (visited[nextNode] == -1){
 
-            visited[nextNode] = ++nodeCount;
-            currNode = nextNode; 
+            visited[nextNode] = nodeCount++;
+            currNode = nextNode;
 
         } else {
 
@@ -246,6 +245,7 @@ public class Ant {
 
         Arrays.fill(visited, -1);
         visited[0] = nestNode;
+        currNode = nestNode;
         nodeCount = 1;
     }
     
@@ -356,7 +356,7 @@ public class Ant {
 
         String str = "{" + path[0];
 
-        for (int i = 1; i < path.length && path[i] != -1; i++) {
+        for (int i = 1; i < path.length - 1 && path[i] != -1; i++) {
             str += "," + path[i];
         }
 

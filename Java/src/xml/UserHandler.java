@@ -33,15 +33,19 @@ class UserHandler extends DefaultHandler {
 		} else if (qName.equalsIgnoreCase("weight")) {
 			int targetnode = Integer.parseInt(attributes.getValue("targetnode"));
 			bWeight = true;
-			InitialValues.addRelation(targetnode);
+            InitialValues.addRelation(targetnode);
+            
 		} else if (qName.equalsIgnoreCase("move")) {
+
 			float alpha = Float.parseFloat(attributes.getValue("alpha"));
 			InitialValues.setAlpha(alpha);
 			float beta = Float.parseFloat(attributes.getValue("beta"));
 			InitialValues.setBeta(beta);
 			float delta = Float.parseFloat(attributes.getValue("delta"));
-			InitialValues.setDelta(delta);
+            InitialValues.setDelta(delta);
+            
 		} else if (qName.equalsIgnoreCase("evaporation")) {
+            
 			float eta = Float.parseFloat(attributes.getValue("eta"));
 			InitialValues.setEta(eta);
 			float rho = Float.parseFloat(attributes.getValue("rho"));

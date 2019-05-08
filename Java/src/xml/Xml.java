@@ -26,10 +26,22 @@ public class Xml {
 		try {
 			validate(filename);
 			return true;}
-		catch (ParserConfigurationException e) {return false;}
-		catch (FileNotFoundException e) {return false;}
-		catch (SAXException e) {return false;}
-		catch (IOException e) {return false;}
+		catch (ParserConfigurationException e) {
+            System.out.println(e.getLocalizedMessage());
+            return false;
+        }
+		catch (FileNotFoundException e) {
+            System.out.println(e.getLocalizedMessage());
+            return false;
+        }
+		catch (SAXException e) {
+            System.out.println(e.getLocalizedMessage());
+            return false;
+        }
+		catch (IOException e) {
+            System.out.println(e.getLocalizedMessage());
+            return false;
+        }
 	}
 	
 	/**
@@ -41,17 +53,20 @@ public class Xml {
 	 * @throws IOException
 	 */
 	private static void validate(String xmlFile) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException {
+        
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		documentBuilderFactory.setValidating(true);
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		documentBuilder.setErrorHandler(new org.xml.sax.ErrorHandler() {
+
 			@Override
 			public void warning(SAXParseException exception) throws SAXException {throw exception;}
 			@Override
 			public void error(SAXParseException exception) throws SAXException {throw exception;}
 			@Override
 			public void fatalError(SAXParseException exception) throws SAXException {throw exception;}
-		});
+        });
+        
 		documentBuilder.parse(new FileInputStream(xmlFile));
 	}
 	
@@ -69,9 +84,18 @@ public class Xml {
 			saxParser.parse(inputFile, userhandler); 
 			return true;	
 		} 
-		catch (ParserConfigurationException e) {return false;}
-		catch (SAXException e) {return false;}
-		catch (IOException e) {return false;}
+		catch (ParserConfigurationException e) {
+            System.out.println(e.getLocalizedMessage());
+            return false;
+        }
+		catch (SAXException e) {
+            System.out.println(e.getLocalizedMessage());
+            return false;
+        }
+		catch (IOException e) {
+            System.out.println(e.getLocalizedMessage());
+            return false;
+        }
 	}	
 	
 }

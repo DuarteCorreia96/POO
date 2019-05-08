@@ -1,5 +1,7 @@
 package tsp;
 
+import java.util.ArrayList;
+
 import graph.*;
 
 /**
@@ -17,7 +19,7 @@ import graph.*;
  * @author Joao Pinto
  * @author Jose Bastos
  * @see UndirectedGraph
- * @see EventEvaporation
+ * @see EvaporationEvent
  */
 
 public class TSPGraph extends UndirectedGraph{
@@ -40,7 +42,7 @@ public class TSPGraph extends UndirectedGraph{
      * @param eat Average value of the exponential distribution of the time between each 
      *             evaporation
      */
-	public TSPGraph(int n, int[][] info, double rho, double eta) {
+	public TSPGraph(int n, ArrayList<int[]> info, double rho, double eta) {
 
         super(n);
         this.rho = rho;
@@ -50,9 +52,9 @@ public class TSPGraph extends UndirectedGraph{
 		computeW();
 	}
 
-	private void TSPGraphBuilder(int[][] info) {
-		for(int j=0; j<info.length; j++) {
-			addEdge(info[j][0],info[j][1],info[j][2]);
+	private void TSPGraphBuilder(ArrayList<int[]> info) {
+		for(int[] j : info) {
+			addEdge(j[0], j[1], j[2]);
 		}
 			
 	}
@@ -119,9 +121,9 @@ public class TSPGraph extends UndirectedGraph{
      * @return the cost of all edges contained in the set of visited vertices
      */
 	public int getPathCost(int path[]) {
-    
+
         int cost = 0;
-            for(int j=0; j<path.length-1;j++) {
+            for(int j = 0; j<path.length-1;j++) {
                 cost += findVertex(path[j]).findEdge(findVertex(path[j+1])).getWeight();
             }
             
