@@ -3,6 +3,14 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * Implementation of the methods called by the SAX parser to store the values in the {@code InitialValues}.
+ * 
+ * @author Duarte Correia
+ * @author Joao Pinto
+ * @author Jose Bastos
+ * @see InitialValues
+ */
 class UserHandler extends DefaultHandler {
 
 	boolean bWeight = false;

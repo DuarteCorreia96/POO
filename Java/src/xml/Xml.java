@@ -14,7 +14,13 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-
+/**
+ * The {@code Xml} implements the methods to validate and parse the XML file provided.
+ * 
+ * @author Duarte Correia
+ * @author Joao Pinto
+ * @author Jose Bastos
+ */
 public class Xml {
 
 	/**
@@ -45,9 +51,9 @@ public class Xml {
 	}
 	
 	/**
-	 * 
-	 * @param xmlFile
-	 * @throws ParserConfigurationException
+	 * Validates the file according to the dtd. If it not valid  throws exception.
+	 * @param xmlFile name of the xml file
+	 * @throws ParserConfigurationException 
 	 * @throws FileNotFoundException
 	 * @throws SAXException
 	 * @throws IOException
@@ -81,6 +87,7 @@ public class Xml {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();
 			UserHandler userhandler = new UserHandler();
+			InitialValues.reset();
 			saxParser.parse(inputFile, userhandler); 
 			return true;	
 		} 
