@@ -7,7 +7,7 @@
         "request": "launch",
         "mainClass": "tsp.Main",
         "projectName": "Java",
-        "args": "TESTS/data1.xml"
+        "args": "data1.xml"
     },
     {
         "type": "java",
