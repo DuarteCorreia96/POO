@@ -69,7 +69,7 @@ public class Main {
             PEC.add(new AntEvent(0.0, delta, colony[i]));
         }
         
-        PEC.add(new ObservationEvent(tau));
+        PEC.add(new ObservationEvent(tau, maze));
     
         LinkedList<Event> events; 
         while (PEC.peek() != null) {

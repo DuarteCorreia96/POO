@@ -111,8 +111,8 @@ public class AntEvent extends Event {
             int pathCost = maze.getPathCost(path);
             
 
-            if (pathCost < Ant.getBestCost()){
-                Ant.setBestCycle(path, pathCost);
+            if (pathCost < maze.getBestCost()){
+                maze.setBestCycle(path, pathCost);
             }
 
             for (int i = 0; i < path.length - 1; i++){

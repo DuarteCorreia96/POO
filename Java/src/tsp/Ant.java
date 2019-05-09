@@ -28,7 +28,6 @@ import java.util.Random;
  * <li> Get the next node weight.
  * <li> Get the current path of the ant.
  * <li> Check if the current path is already a <i>Hamiltonian Cycle</i>
- * <li> Get the current best clyce and weight.
  * </ul> 
  * 
  * The class has a static variable that saves the best cycle found so far and 
@@ -43,8 +42,6 @@ import java.util.Random;
 public class Ant {
 
     private static Random generator = new Random();
-    private static int[] bestCycle;
-    private static int bestCycleCost = Integer.MAX_VALUE;
 
     private final int nestNode;
     private final double alpha;
@@ -299,35 +296,6 @@ public class Ant {
         return gamma;
     }
 
-    /**
-     * Returns the cost of the best <i>Hamilton Cycle</i> found so far by every ant.
-     * 
-     * @return {@code bestCycleCost} cost of best <i>Hamilton Cycle</i>.
-     */
-    public static int getBestCost() {
-        return bestCycleCost;
-    }
-
-    /**
-     * Sets the new best <i>Hamilton Cycle</i> found by the ants and its cost.
-     * 
-     * @param path the new best <i>Hamilton Cycle</i> found.
-     * @param cost the new best cost of a <i>Hamilton Cycle</i> found.
-     */
-    public static void setBestCycle(int[] path, int cost) {
-        bestCycleCost = cost;
-        bestCycle = path;
-    }
-
-    /**
-     * Returns the best <i>Hamilton Cycle</i> found so far.
-     * 
-     * @return {@code bestCycle} path of the best <i>Hamilton Cycle</i>
-     */
-    public static int[] getBestCycle() {
-        return bestCycle;
-    }
-
     @Override
     public String toString() {
 
@@ -342,25 +310,4 @@ public class Ant {
         return str;
     }
 
-    /**
-     * Returns the best <i>Hamilton Cycle</i> in String form
-     * 
-     * @return String of the best <i>Hamilton Cycle</i>
-     */
-    public static String bestPathString() {
-
-        int[] path = bestCycle;
-
-        if(bestCycle == null)
-            return "";
-
-        String str = "{" + path[0];
-
-        for (int i = 1; i < path.length - 1 && path[i] != -1; i++) {
-            str += "," + path[i];
-        }
-
-        str += "}";
-        return str;
-    }
 } 

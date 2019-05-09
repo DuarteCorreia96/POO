@@ -18,6 +18,7 @@ public class ObservationEvent extends Event {
 
     private static int observation = 1;
     private final double tau;
+    private final TSPGraph maze;
 
     /**
      * Constructor of a {@code ObservationEvent} which receives the {@code tau}
@@ -26,9 +27,10 @@ public class ObservationEvent extends Event {
      * 
      * @param tau Final time 
      */
-    ObservationEvent(double tau) {
+    ObservationEvent(double tau, TSPGraph maze) {
 
         this.tau = tau;
+        this.maze = maze;
         setEventTime(observation * tau / 20);
     }
 
@@ -48,12 +50,12 @@ public class ObservationEvent extends Event {
         System.out.println("\t Present instant:              \t" + getEventTime());
         System.out.println("\t Number of move events:        \t" + AntEvent.getEventNo());
         System.out.println("\t Number of evaporation events: \t" + EvaporationEvent.getEventNo());
-        System.out.println("\t Hamiltonian cycle:            \t" + Ant.bestPathString() + "\n");
+        System.out.println("\t Hamiltonian cycle:            \t" + maze.bestPathString() + "\n");
         
         LinkedList<Event> nextObservation = new LinkedList<Event>();
         observation++;
 
-        nextObservation.push(new ObservationEvent(tau));
+        nextObservation.push(new ObservationEvent(tau, maze));
         return nextObservation;
     }
 

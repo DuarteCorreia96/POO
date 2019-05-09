@@ -14,6 +14,8 @@ import graph.*;
  * where each entry <i>(i,j)</i> saves the <i>pheromone level</i> of the edge
  * connecting node <i>i</i> and <i>j</i>.
  * 
+ * It also saves the best <i>Hamiltonina Cycle</i> found so far.
+ * 
  * @author Duarte Correia
  * @author Joao Pinto
  * @author Jose Bastos
@@ -26,7 +28,10 @@ public class TSPGraph extends UndirectedGraph{
     private final double rho;
     private final double eta;
 	private double[][] pheromones;
-	private int W;
+    private int W;
+    
+    private int[] bestCycle;
+    private int bestCycleCost = Integer.MAX_VALUE;
 
     /**
      * Constructor for the {@code TSPGraph} objects.
@@ -206,5 +211,56 @@ public class TSPGraph extends UndirectedGraph{
      */
     public double getEta() {
         return eta;
+    }
+
+    /**
+     * Returns the cost of the best <i>Hamilton Cycle</i> found so far.
+     * 
+     * @return {@code bestCycleCost} cost of best <i>Hamilton Cycle</i>.
+     */
+    public int getBestCost() {
+        return bestCycleCost;
+    }
+
+    /**
+     * Returns the best <i>Hamilton Cycle</i> found so far.
+     * 
+     * @return {@code bestCycle} path of the best <i>Hamilton Cycle</i>
+     */
+    public int[] getBestCycle() {
+        return bestCycle;
+    }
+
+    /**
+     * Sets the new best <i>Hamilton Cycle</i> found and its cost.
+     * 
+     * @param path the new best <i>Hamilton Cycle</i> found.
+     * @param cost the new best cost of a <i>Hamilton Cycle</i> found.
+     */
+    public void setBestCycle(int[] path, int cost) {
+        bestCycleCost = cost;
+        bestCycle = path;
+    }
+
+    /**
+     * Returns the best <i>Hamilton Cycle</i> in String form
+     * 
+     * @return String of the best <i>Hamilton Cycle</i>
+     */
+    public String bestPathString() {
+
+        int[] path = bestCycle;
+
+        if (bestCycle == null)
+            return "";
+
+        String str = "{" + path[0];
+
+        for (int i = 1; i < path.length - 1 && path[i] != -1; i++) {
+            str += "," + path[i];
+        }
+
+        str += "}";
+        return str;
     }
 }
