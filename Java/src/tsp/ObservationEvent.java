@@ -51,7 +51,7 @@ public class ObservationEvent extends Event {
         System.out.println("\t Number of move events:        \t" + AntEvent.getEventNo());
         System.out.println("\t Number of evaporation events: \t" + EvaporationEvent.getEventNo());
         System.out.println("\t Hamiltonian cycle:            \t" + maze.bestPathString() + "\n");
-        System.out.println("\t Cost of the cycle:            \t" + maze.getBestCost());
+        //System.out.println("\t Cost of the cycle:            \t" + maze.getBestCost());
 
         LinkedList<Event> nextObservation = new LinkedList<Event>();
         observation++;
