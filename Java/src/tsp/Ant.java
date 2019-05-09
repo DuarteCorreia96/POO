@@ -87,7 +87,7 @@ public class Ant {
     /**
      * Checks if a node has been visited by the ant. <p>
      * 
-     * @param node
+     * @param node to be checked
      * @return {@code true} if the ant has visited the node, {@code false} if not.
      */
     public boolean isVisited(int node) {
@@ -334,7 +334,7 @@ public class Ant {
         int[] path = doPath();
         String str = "path: {" + path[0];
 
-        for (int i = 1; i < path.length && path[i] != -1; i++){
+        for (int i = 1; i < path.length - 1 && path[i] != -1; i++){
             str += ", " + path[i];
         }
 
