@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE simulation SYSTEM "simulation.dtd">
+<simulation finalinst="500.0" antcolsize="10000" plevel="15">
+	<graph nbnodes="30" nestnode="1">
+		<node nodeidx="1">
+			<weight targetnode="5">17</weight>
+			<weight targetnode="29">28</weight>
+			<weight targetnode="30">5</weight>
+		</node>
+		<node nodeidx="2">
+			<weight targetnode="3">20</weight>
+			<weight targetnode="5">28</weight>
+			<weight targetnode="6">25</weight>
+			<weight targetnode="8">25</weight>
+			<weight targetnode="12">2</weight>
+			<weight targetnode="15">21</weight>
+			<weight targetnode="17">1</weight>
+			<weight targetnode="24">5</weight>
+			<weight targetnode="27">6</weight>
+		</node>
+		<node nodeidx="3">
+			<weight targetnode="5">1</weight>
+			<weight targetnode="7">27</weight>
+			<weight targetnode="17">5</weight>
+			<weight targetnode="20">11</weight>
+			<weight targetnode="21">4</weight>
+			<weight targetnode="23">21</weight>
+			<weight targetnode="25">14</weight>
+			<weight targetnode="26">25</weight>
+			<weight targetnode="27">22</weight>
+			<weight targetnode="29">21</weight>
+		</node>
+		<node nodeidx="4">
+			<weight targetnode="12">21</weight>
+			<weight targetnode="14">17</weight>
+			<weight targetnode="15">22</weight>
+			<weight targetnode="16">5</weight>
+			<weight targetnode="17">11</weight>
+			<weight targetnode="27">15</weight>
+			<weight targetnode="30">23</weight>
+		</node>
+		<node nodeidx="5">
+			<weight targetnode="8">4</weight>
+			<weight targetnode="11">21</weight>
+			<weight targetnode="14">15</weight>
+			<weight targetnode="18">10</weight>
+			<weight targetnode="20">13</weight>
+			<weight targetnode="22">4</weight>
+			<weight targetnode="28">27</weight>
+		</node>
+		<node nodeidx="6">
+			<weight targetnode="7">8</weight>
+			<weight targetnode="11">29</weight>
+			<weight targetnode="15">7</weight>
+			<weight targetnode="17">5</weight>
+			<weight targetnode="21">7</weight>
+			<weight targetnode="23">11</weight>
+			<weight targetnode="26">12</weight>
+			<weight targetnode="30">29</weight>
+		</node>
+		<node nodeidx="7">
+			<weight targetnode="8">8</weight>
+			<weight targetnode="10">14</weight>
+			<weight targetnode="13">24</weight>
+			<weight targetnode="20">19</weight>
+			<weight targetnode="21">22</weight>
+			<weight targetnode="24">6</weight>
+			<weight targetnode="25">20</weight>
+			<weight targetnode="27">10</weight>
+			<weight targetnode="28">23</weight>
+		</node>
+		<node nodeidx="8">
+			<weight targetnode="12">27</weight>
+			<weight targetnode="13">1</weight>
+			<weight targetnode="14">8</weight>
+			<weight targetnode="15">21</weight>
+			<weight targetnode="16">6</weight>
+			<weight targetnode="25">18</weight>
+			<weight targetnode="28">6</weight>
+			<weight targetnode="29">15</weight>
+		</node>
+		<node nodeidx="9">
+			<weight targetnode="11">21</weight>
+			<weight targetnode="14">25</weight>
+			<weight targetnode="15">24</weight>
+			<weight targetnode="18">1</weight>
+			<weight targetnode="29">14</weight>
+			<weight targetnode="30">7</weight>
+		</node>
+		<node nodeidx="10">
+			<weight targetnode="14">2</weight>
+			<weight targetnode="18">2</weight>
+			<weight targetnode="20">21</weight>
+			<weight targetnode="26">15</weight>
+			<weight targetnode="27">27</weight>
+			<weight targetnode="28">12</weight>
+			<weight targetnode="30">8</weight>
+		</node>
+		<node nodeidx="11">
+			<weight targetnode="12">12</weight>
+			<weight targetnode="14">24</weight>
+			<weight targetnode="15">29</weight>
+			<weight targetnode="20">11</weight>
+			<weight targetnode="21">3</weight>
+			<weight targetnode="23">16</weight>
+			<weight targetnode="24">21</weight>
+			<weight targetnode="27">4</weight>
+		</node>
+		<node nodeidx="12">
+			<weight targetnode="14">26</weight>
+			<weight targetnode="18">23</weight>
+			<weight targetnode="20">16</weight>
+			<weight targetnode="21">2</weight>
+			<weight targetnode="23">6</weight>
+			<weight targetnode="25">22</weight>
+			<weight targetnode="29">24</weight>
+		</node>
+		<node nodeidx="13">
+			<weight targetnode="19">4</weight>
+			<weight targetnode="22">15</weight>
+			<weight targetnode="25">20</weight>
+			<weight targetnode="28">1</weight>
+		</node>
+		<node nodeidx="14">
+			<weight targetnode="15">11</weight>
+			<weight targetnode="17">25</weight>
+			<weight targetnode="19">11</weight>
+			<weight targetnode="21">21</weight>
+			<weight targetnode="23">25</weight>
+			<weight targetnode="28">17</weight>
+		</node>
+		<node nodeidx="15">
+			<weight targetnode="18">7</weight>
+			<weight targetnode="19">5</weight>
+			<weight targetnode="20">1</weight>
+			<weight targetnode="25">12</weight>
+			<weight targetnode="28">1</weight>
+			<weight targetnode="29">17</weight>
+		</node>
+		<node nodeidx="16">
+			<weight targetnode="17">21</weight>
+			<weight targetnode="19">17</weight>
+			<weight targetnode="27">7</weight>
+			<weight targetnode="29">15</weight>
+		</node>
+		<node nodeidx="17">
+			<weight targetnode="20">25</weight>
+			<weight targetnode="26">26</weight>
+		</node>
+		<node nodeidx="18">
+			<weight targetnode="25">16</weight>
+		</node>
+		<node nodeidx="19">
+		</node>
+		<node nodeidx="20">
+			<weight targetnode="22">28</weight>
+			<weight targetnode="24">21</weight>
+			<weight targetnode="28">10</weight>
+			<weight targetnode="29">19</weight>
+		</node>
+		<node nodeidx="21">
+			<weight targetnode="22">28</weight>
+			<weight targetnode="24">4</weight>
+		</node>
+		<node nodeidx="22">
+			<weight targetnode="23">27</weight>
+			<weight targetnode="24">16</weight>
+			<weight targetnode="25">17</weight>
+		</node>
+		<node nodeidx="23">
+			<weight targetnode="28">11</weight>
+		</node>
+		<node nodeidx="24">
+			<weight targetnode="27">25</weight>
+			<weight targetnode="28">10</weight>
+		</node>
+		<node nodeidx="25">
+			<weight targetnode="27">13</weight>
+			<weight targetnode="28">11</weight>
+			<weight targetnode="29">25</weight>
+		</node>
+		<node nodeidx="26">
+			<weight targetnode="29">5</weight>
+		</node>
+		<node nodeidx="27">
+			<weight targetnode="28">21</weight>
+			<weight targetnode="29">4</weight>
+		</node>
+		<node nodeidx="28">
+		</node>
+		<node nodeidx="29">
+		</node>
+		<node nodeidx="30">
+		</node>
+	</graph>
+	<events>
+		<move alpha="1.0" beta=".1" delta="0.1"/>
+		<evaporation eta="15.0" rho="10.0"/>
+	</events>
+</simulation>
