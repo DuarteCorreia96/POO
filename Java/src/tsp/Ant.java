@@ -211,9 +211,9 @@ public class Ant {
     }
 
     /**
-     * Moves ant for next node, updating it's path and dleting from it's path
-     * nodes that will not create a cycle, e.g, if current path is 1->2->3 and 
-     * next node is 2 it will move to node 2 and update path to 1->2.
+     * Moves ant for next node, updating it's path and dleting from it's path nodes
+     * that will not create a cycle, e.g, if current path is 1→2→3 and next node is
+     * 2 it will move to node 2 and update path to 1→2.
      * 
      * @param nextNode node that the ant will go next.
      */

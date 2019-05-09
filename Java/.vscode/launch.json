@@ -8,7 +8,7 @@
         "request": "launch",
         "mainClass": "tsp.Main",
         "projectName": "Java",
-        "args": "bin/data1.xml"
+        "args": "TESTS/data1.xml"
     },
     {
         "type": "java",
@@ -16,7 +16,7 @@
         "request": "launch",
         "mainClass": "tsp.Main",
         "projectName": "Java",
-        "args": "bin/test1000n800e.xml"
+        "args": "TESTS/test1000n800e.xml"
     },
     {
         "type": "java",
@@ -24,7 +24,7 @@
         "request": "launch",
         "mainClass": "tsp.Main",
         "projectName": "Java",
-        "args": "teste1.xml"
+        "args": "TESTS/test_1.xml"
     },
     {
         "type": "java",
@@ -32,7 +32,7 @@
         "request": "launch",
         "mainClass": "tsp.Main",
         "projectName": "Java",
-        "args": "teste2.xml"
+        "args": "TESTS/test_2.xml"
     },
     {
         "type": "java",
@@ -40,7 +40,7 @@
         "request": "launch",
         "mainClass": "tsp.Main",
         "projectName": "Java",
-        "args": "teste3.xml"
+        "args": "TESTS/test_3.xml"
     },
     {
         "type": "java",
@@ -48,7 +48,7 @@
         "request": "launch",
         "mainClass": "tsp.Main",
         "projectName": "Java",
-        "args": "teste4.xml"
+        "args": "TESTS/test_4.xml"
     },
     {
         "type": "java",
@@ -56,7 +56,7 @@
         "request": "launch",
         "mainClass": "tsp.Main",
         "projectName": "Java",
-        "args": "teste5.xml"
+        "args": "TESTS/test_5.xml"
     },
     {
         "type": "java",

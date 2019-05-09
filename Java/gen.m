@@ -1,10 +1,10 @@
 
 n = 30;
-a = randi([1 15], n, n);
+a = randi([1 100], n, n);
 
-a(a > 10) = 0;
+%a(a > 29) = 0;
 
-fileID = fopen('test4.xml','w');
+fileID = fopen('test_3.xml','w');
 
 fprintf(fileID, '<?xml version="1.0" encoding="UTF-8"?>\n');
 fprintf(fileID, '<!DOCTYPE simulation SYSTEM "simulation.dtd">\n');
@@ -27,4 +27,16 @@ fprintf(fileID, '		<evaporation eta="2.0" rho="10.0"/>\n');
 fprintf(fileID, '	</events>\n');
 fprintf(fileID, '</simulation>\n');
 
+
 fclose(fileID);
+
+b = a;
+for i = 1:n
+    b(i,i) = 0;
+    for j = 1:n
+        b(i,j) = b(j,i);
+    end
+end
+
+ratio = length(b(b>0))/(n*n);
+

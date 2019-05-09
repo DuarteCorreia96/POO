@@ -16,8 +16,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Xml.validateFile(args[0]);
-        Xml.readValues(args[0]);
+        if( !Xml.validateFile(args[0]) || !Xml.readValues(args[0]))
+            System.exit(1);
 
         double tau = InitialValues.getFinalinst();
         int nAnts  = InitialValues.getAntcolsize();
